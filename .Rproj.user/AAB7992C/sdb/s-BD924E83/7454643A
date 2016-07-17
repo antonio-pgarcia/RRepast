@@ -1,0 +1,18 @@
+{
+    "contents" : "year <- sub(\"-.*\", \"\", meta$Date)\nnote <- sprintf(\"R package version %s\", meta$Version)\n\nbibentry(bibtype = \"Manual\",\n         title = \"{rrepast}: Running 'Repast Simphony' models inside R environment\",\n         author = c(person(\"Antonio\", \"Prestes Garcia\", role = c(\"aut\",\"cre\")),\n                    person(\"Alfonso\", \"Rodriguez-Paton\", role = c(\"aut\",\"ths\"))),\n         year = year,\n         note = note,\n         url = \"https://CRAN.R-project.org/package=rrepast\")",
+    "created" : 1454869709570.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "625830538",
+    "id" : "7454643A",
+    "lastKnownWriteTime" : 1454870341,
+    "path" : "~/R-Projects/RRepast/inst/CITATION",
+    "project_path" : "inst/CITATION",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "type" : "text"
+}

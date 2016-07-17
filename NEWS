@@ -1,0 +1,77 @@
+# Change Log
+This project adheres to [Semantic Versioning](http://semver.org/).
+
+## [Unreleased]
+### Added
+
+### Changed
+- Run models from Repast source directory
+- Easy.Setup Add an option to configure model file and copy jars
+
+## R/Repast [0.6.0] - 2016-07-20
+### Added
+- config.scenario Add the rrepast integration to the scenario file
+- config.check Check if Repast model is configured for rrepast
+- config.copylib Copy the required lib to the Repast model classpath
+- jarfile Return the full path to some jar inside the rrepast package
+- check.scenario Check for scenario integration code
+- check.integration Check for the integration library in the model's library dir
+
+### Changed
+
+## R/Repast [0.5.0] - 2016-05-08
+### Added
+- Easy.Setup Experiment initialization 
+- Easy.Calibration Find the best set of paramters for the model
+- Plot.Calibration Plot results of calibration process
+- AoE.NRMSD Calculates the Normalized Root-Mean-Square 
+- AoE.MAE Calculates the average-error magnitude
+- simple.fitting Simple calibration method based on experimental setup
+- filterby Selects a subset of a data frame
+- col.sum Sum dataset columns 
+- pick.fittest Choose the best solutions 
+- dfround Round dataframe columns
+- Results.GetExperiment
+- Results.GetObject
+- Results.GetCharts
+- Calibration.GetMemberKeys
+- Calibration.GetMemberList
+
+### Changed
+
+### Fixed
+- PB.update Failed to update progress bar correctelly when replication > 1
+
+## R/Repast [0.4.0] - 2016-04-10
+### Added
+- The NEWS changelog file
+- jvm.setOut Send the JVM System.out to a file
+- jvm.resetOut Send the JVM System.out to R console
+- getExperimentParamSet
+- getExperimentOutput
+- getExperimentDataset
+- DFToMatrix 
+- PB.* Functions for show a progress bar functions during model run
+- AoE.RMSD A Root Mean Square Deviation function
+- AoE.CoV
+- AoE.ColumnCoV
+- AoE.Stability
+- AoE.RandomSampling function for DoE
+- AoE.LatinHypercube function for DoE
+- AoE.FullFactorial function for DoE
+- AoE.Morris function for SA screening
+- AoE.GetMorrisOutput wrapper for access list members of Morris output
+- AoE.Sobol function for variance decomposition GSA
+- Plot.Stability Plot stability chart
+- Plot.Morris function for ploting Morris's screening output
+- PLot.Sobol function for ploting Sobol output
+- Easy.Stability function for determine the number of simulations
+- Easy.Morris function for Morris's screening in one call
+- Easy.Sobol Function for Sobol sensitivity analysis
+
+### Changed
+- LatinHypercube Renamed function LatinHypercube to AoE.LatinHypercube
+
+### Fixed
+- Fixed dir.exists missing in R version < 3.2
+- Engine.setParameter: Coercing parameters types to model types

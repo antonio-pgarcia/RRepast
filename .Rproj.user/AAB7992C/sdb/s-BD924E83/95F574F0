@@ -1,0 +1,18 @@
+{
+    "contents" : "# Change Log\nThis project adheres to [Semantic Versioning](http://semver.org/).\n\n## [Unreleased]\n### Added\n- AoA.PSO function for Particle Swarm parameter estimation\n- AoA.ACO function for Ant Colony parameter estimation\n\n### Changed\n- Run models from Repast source directory\n\n## R/Repast [0.4.0] - 2016-03-20\n### Added\n- getExperimentParamSet\n- getExperimentOutput\n- getExperimentDataset\n- DFToMatrix\n- The NEWS changelog file\n- AoE.RMSD A Root Mean Square Deviation function\n- AoE.CoV\n- AoE.ColumnCoV\n- AoE.Stability\n- AoE.RandomSampling function for DoE\n- AoE.LatinHypercube function for DoE\n- AoE.FullFactorial function for DoE\n- AoE.Morris function for SA screening\n- AoE.GetMorrisOutput wrapper for access list members of Morris output\n- AoE.Sobol function for variance decomposition GSA\n- Plot.Stability\n- Plot.Morris function for ploting Morris's screening output\n- Easy.Morris function for Morris's screening in one call\n- Easy.Stability function for determine the number of simulations\n\n### Changed\n- Renamed function LatinHypercube to AoE.LatinHypercube\n\n### Fixed\n- Fixed dir.exists missing in R version < 3.2\n- Engine.setParameter: Coercing parameters types to model types",
+    "created" : 1454926205582.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3547442161",
+    "id" : "95F574F0",
+    "lastKnownWriteTime" : 1459198897,
+    "path" : "~/R-Projects/RRepast/NEWS",
+    "project_path" : "NEWS",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "type" : "text"
+}

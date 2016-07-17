@@ -1,0 +1,17 @@
+{
+    "contents" : "Package: rrepast\nType: Package\nTitle: Invoke 'Repast Simphony' Simulation Models\nVersion: 0.4.0\nDate: 2015-12-13\nAuthors@R: c(\n    person(\"Antonio\", \"Prestes Garcia\", email = \"antonio.pgarcia@alumnos.upm.es\", role = c(\"aut\",\"cre\")),\n    person(\"Alfonso\", \" Rodriguez-Paton\", email = \"arpaton@fi.upm.es\", role = c(\"aut\",\"ths\")))\nMaintainer: Antonio Prestes Garcia <antonio.pgarcia@alumnos.upm.es>\nURL: https://github.com/antonio-pgarcia/rrepast\nDescription: An R and Repast integration tool for running individual-based\n    (IbM) simulation models developed using 'Repast Simphony' Agent-Based framework\n    directly from R code. This package integrates 'Repast Simphony' models within\n    R environment, making easier the tasks of running and analyzing model output\n    data for automated parameter calibration and for carrying out uncertainty and\n    sensitivity analysis using the power of R environment.\nLicense: MIT + file LICENSE\nDepends:\n    rJava,\n    digest,\n    xlsx,\n    lhs,\n    sensitivity,\n    ggplot2\nRoxygenNote: 5.0.1",
+    "created" : 1446834052106.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1867762099",
+    "id" : "4693DC16",
+    "lastKnownWriteTime" : 1457855513,
+    "path" : "~/R-Projects/RRepast/DESCRIPTION",
+    "project_path" : "DESCRIPTION",
+    "properties" : {
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "type" : "dcf"
+}
