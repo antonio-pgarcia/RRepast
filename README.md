@@ -15,5 +15,9 @@ sensitivity analysis using the power of R environment.
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
 
+## Statistics 
+
+http://cranlogs.r-pkg.org/badges/rrepast
+
 ## Acknowledgments
 
