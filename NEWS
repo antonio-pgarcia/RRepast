@@ -7,6 +7,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Run models from Repast source directory
 
+### Fixed
+- AddFactor modified to correctlly build the data frame.
 
 ## R/Repast [0.6.0] - 2016-07-20
 ### Added
