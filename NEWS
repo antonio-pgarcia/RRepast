@@ -10,6 +10,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 - AddFactor modified to correctlly build the data frame.
 
+## R/Repast [0.7.0] - 2016-07-20
+### Added
+- GetSimulationParameterType Returns the declared type of a 'Repast' model parameter
+
+### Changed
+
+
+### Fixed
+- Engine.getParameterType Does no return any value
+
 ## R/Repast [0.6.0] - 2016-07-20
 ### Added
 - config.scenario Add the rrepast integration to the scenario file

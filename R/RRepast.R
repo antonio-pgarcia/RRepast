@@ -611,6 +611,7 @@ Engine.getParameter<- function(e,k) {
 #' @export 
 Engine.getParameterType<- function(e,k) {
   v<- .jcall(e,"Ljava/lang/String;","getParameterType",k)
+  v
 }
 
 #' @title Engine.getParameterAsString 
@@ -1267,6 +1268,20 @@ GetOutput<- function(e) {
   c<- textConnection(Engine.GetModelOutput(e))
   read.csv(c)
 }
+
+#' @title GetSimulationParameterType
+#' 
+#' @description Returns the declared parameter type.
+#' 
+#' @param e An instance of 'Engine' object
+#' @param k The parameter name
+#' 
+#' @return The parameter type as string
+#' @export
+GetSimulationParameterType<- function(e, k) {
+  Engine.getParameterType(e, k)  
+}
+
 
 #' @title Set parameters for running model
 #' 
