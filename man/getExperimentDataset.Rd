@@ -15,9 +15,9 @@ The reference to \code{dataset} container.
 \description{
 The RunExperiment function returns a list holding
 the \code{paramset}, \code{output} and \code{dataset} collection.
-The \code{paramset} collection contains the parameters used for 
-running the experimental setup. The \code{output} has the results 
-from user provided calibration function. The \code{dataset} 
+The \code{paramset} collection contains the parameters used for
+running the experimental setup. The \code{output} has the results
+from user provided calibration function. The \code{dataset}
 collection has the raw output of 'Repast' aggregated dataset.
 }
 

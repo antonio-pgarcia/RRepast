@@ -23,7 +23,7 @@ Run the model multiple times for different parameters
 given by design matrix function parameter.
 }
 \details{
-The FUN function must return zero for perfect fit and values 
+The FUN function must return zero for perfect fit and values
 greater than zero otherwise.
 }
 \examples{
@@ -38,6 +38,6 @@ greater than zero otherwise.
    p<- GetSimulationParameters(e)
    exp.design<- BuildParameterSet(d,p)
    v<- RunExperiment(e,r=1,exp.design,my.cost) }
-   
+
 }
 

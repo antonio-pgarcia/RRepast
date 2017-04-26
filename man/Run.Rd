@@ -17,11 +17,11 @@ Run(e, r = 1, seed = c())
 The model output dataset
 }
 \description{
-This function executes the time steps of an 
-instantiated model. The number of replications of model 
-runs can be specified by the function parameter. The seed 
-parameter may be omitted and will be generated internally. 
-If provided, the seed collection, must contain the same 
+This function executes the time steps of an
+instantiated model. The number of replications of model
+runs can be specified by the function parameter. The seed
+parameter may be omitted and will be generated internally.
+If provided, the seed collection, must contain the same
 number of \code{r} parameter.
 }
 \examples{
@@ -30,6 +30,6 @@ number of \code{r} parameter.
    m<- Model(d)
    Load(m)
    Run(m,r=2) # or Run(m,r=2,seed=c(1,2))}
-   
+
 }
 

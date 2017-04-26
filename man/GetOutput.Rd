@@ -23,6 +23,6 @@ otherwise GetResults must be used.
    m<- Model(d)
    ...
    data<- GetOutput(m)}
-   
+
 }
 

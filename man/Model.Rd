@@ -23,19 +23,19 @@ Instantiate a repast model from the model dir without
 loading the scenario file.
 }
 \details{
-This is the entry point for model execution. Typically 
-any model execution will start with this function which encapsulates 
-all low level calls for model initialization. In order to perform 
-simulations with repast from R code only \code{Model} and a 
-few more function calls are required: \code{\link{Load}}, 
-\code{\link{Run}}. Finally the output of model is managed with 
+This is the entry point for model execution. Typically
+any model execution will start with this function which encapsulates
+all low level calls for model initialization. In order to perform
+simulations with repast from R code only \code{Model} and a
+few more function calls are required: \code{\link{Load}},
+\code{\link{Run}}. Finally the output of model is managed with
 functions \code{\link{GetResults}} and \code{\link{SaveSimulationData}}.
 }
 \examples{
 \dontrun{
    d<- "C:/usr/models/your-model-directory"
    m<- Model(d)}
-   
+
 }
 \references{
 [1] North, M.J., N.T. Collier, and J.R. Vos, "Experiences Creating Three Implementations of the Repast Agent Modeling Toolkit," ACM Transactions

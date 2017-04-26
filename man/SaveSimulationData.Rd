@@ -19,7 +19,7 @@ Saves the simulation results of last call to Run(e)
 function.
 }
 \details{
-The model must have been initialized or user must call 
+The model must have been initialized or user must call
 \code{setId} explicitelly.
 }
 

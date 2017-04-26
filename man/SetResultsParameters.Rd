@@ -10,7 +10,7 @@ SetResultsParameters(d)
 \item{d}{A data.frame with parameter values}
 }
 \description{
-Save the current set of paramters used 
+Save the current set of paramters used
 for the last model run.
 }
 

@@ -10,8 +10,8 @@ AddResults(d)
 \item{d}{A data frame containing one replication data}
 }
 \description{
-This function stores the output 
-of the last model execution and it is intended 
+This function stores the output
+of the last model execution and it is intended
 to be used internally.
 }
 

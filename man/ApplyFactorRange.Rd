@@ -15,7 +15,7 @@ ApplyFactorRange(design, factors)
 The corrected design matrix
 }
 \description{
-Correct the LHS sampling matrix for a 
+Correct the LHS sampling matrix for a
 specific range applying the lambda function. The default
 value of 'lambda' is 'qunif'.
 }

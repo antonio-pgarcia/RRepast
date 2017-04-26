@@ -15,7 +15,7 @@ BuildParameterSet(design, parameters)
 A data frame holding all parameters required for running the model
 }
 \description{
-Merges the design matrix with parameters which 
+Merges the design matrix with parameters which
 will be keep fixed along simulation runs.
 }
 \examples{
@@ -23,13 +23,13 @@ will be keep fixed along simulation runs.
    modeldir<- "c:/usr/models/BactoSim(HaldaneEngine-1.0)"
    e<- Model(modeldir=modeldir,dataset="ds::Output")
    Load(e)
-   
+
    f<- AddFactor(name="cyclePoint",min=40,max=90)
-   
+
    p<- GetSimulationParameters(e)
-   
+
    d<- LatinHypercube(factors=f)
-   
+
    p1<- BuildParameterSet(d,p)}
 
 }

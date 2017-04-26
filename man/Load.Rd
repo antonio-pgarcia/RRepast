@@ -10,7 +10,7 @@ Load(e)
 \item{e}{An engine object instance}
 }
 \description{
-Loads the model's scenario. This function must be 
+Loads the model's scenario. This function must be
 called before running the model.
 }
 \examples{

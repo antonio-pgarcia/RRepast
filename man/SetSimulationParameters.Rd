@@ -12,7 +12,7 @@ SetSimulationParameters(e, p)
 \item{p}{A data frame with simulation parameters}
 }
 \description{
-Modify the repast model parameters with 
+Modify the repast model parameters with
 values provided in parameter 'p' which is a data frame
 with just one row.
 }

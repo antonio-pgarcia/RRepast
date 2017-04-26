@@ -8,29 +8,35 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Run models from Repast source directory
 
 ### Fixed
-- AddFactor modified to correctlly build the data frame.
 
-## R/Repast [0.7.0] - 2016-07-20
+
+
+## R/Repast [0.6.0] - 2017-03-27
 ### Added
 - GetSimulationParameterType Returns the declared type of a 'Repast' model parameter
-
-### Changed
-
-
-### Fixed
-- Engine.getParameterType Does no return any value
-
-## R/Repast [0.6.0] - 2016-07-20
-### Added
 - config.scenario Add the rrepast integration to the scenario file
 - config.check Check if Repast model is configured for rrepast
 - config.copylib Copy the required lib to the Repast model classpath
 - jarfile Return the full path to some jar inside the rrepast package
 - check.scenario Check for scenario integration code
 - check.integration Check for the integration library in the model's library dir
+- UpdateFixedParameters Modify the value of parameters which should be kept fixed
+- rrepast-easyapi.R New file for separate the easy api functions
+- rrepast-aoe.R New file for separate the analysis of experiments functions
+- rrepast-pb.R New file for separate progress bar helper functions
+- rrepast-engine.R New file for separate the low level engine methods
+- rrepast-helper.R New file for holding auxiliary functions
+- Easy.getPlot For geting plots from Morris and Sobol from returned data structure
 
 ### Changed
 - Easy.Setup Add an option to configure model file and copy jars
+- AddFactor modified to correctlly build the data frame.
+- Easy.Morris Added a new parameter for modifying the default model parameters
+- Easy.Sobol Added a new parameter for modifying the default model parameters
+
+### Fixed
+- Engine.getParameterType Does no return any value
+- Fixed title position in ggplot2 plots
 
 ## R/Repast [0.5.0] - 2016-05-08
 ### Added

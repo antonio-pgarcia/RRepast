@@ -10,7 +10,7 @@ GetResultsParameters()
 A data.frame with parameters of the model.
 }
 \description{
-Returns the current set of paramters used 
+Returns the current set of paramters used
 for the last model run.
 }
 

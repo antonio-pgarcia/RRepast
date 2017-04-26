@@ -13,7 +13,7 @@ GetSimulationParameters(e)
 A data frame with simulation parameters
 }
 \description{
-Returns a dataframe with the current set of input 
+Returns a dataframe with the current set of input
 parameters for the last model run.
 }
 
