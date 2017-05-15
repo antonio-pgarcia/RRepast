@@ -7,7 +7,7 @@
 Easy.ShowModelParameters(v)
 }
 \arguments{
-\item{s}{The installation directory of some repast model}
+\item{v}{The installation directory of some repast model}
 }
 \value{
 The model parameters

@@ -1,8 +1,8 @@
 Package: rrepast
 Type: Package
 Title: Invoke 'Repast Simphony' Simulation Models
-Version: 0.5.0
-Date: 2016-05-08
+Version: 0.6.0
+Date: 2017-05-15
 Authors@R: c(
     person("Antonio", "Prestes Garcia", email = "antonio.pgarcia@alumnos.upm.es", role = c("aut","cre")),
     person("Alfonso", " Rodriguez-Paton", email = "arpaton@fi.upm.es", role = c("aut","ths")))

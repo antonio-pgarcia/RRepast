@@ -422,7 +422,7 @@ simple.fitting<- function(m.dir, m.ds, m.time=300, parameters, samples=100, trie
 #' 
 #' @description Returns the list current model parameters
 #' 
-#' @param s The installation directory of some repast model
+#' @param v The installation directory of some repast model
 #'
 #' @return The model parameters
 #' @export
