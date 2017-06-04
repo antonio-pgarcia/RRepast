@@ -5,7 +5,7 @@
 \title{Easy API for output stability}
 \usage{
 Easy.Stability(m.dir, m.ds, m.time = 300, parameters, samples = 1,
-  tries = 100, vars = c(), FUN)
+  tries = 100, vars = c(), FUN, default = NULL)
 }
 \arguments{
 \item{m.dir}{The installation directory of some repast model}
@@ -23,6 +23,8 @@ Easy.Stability(m.dir, m.ds, m.time = 300, parameters, samples = 1,
 \item{vars}{The model's output variables for compute CoV}
 
 \item{FUN}{The calibration function.}
+
+\item{default}{The alternative values for parameters which should be kept fixed}
 }
 \value{
 A list with holding experimnt, object and charts

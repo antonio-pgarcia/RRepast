@@ -53,6 +53,30 @@ Easy.getPlot<- function(obj, c, key) {
   p
 }
 
+#' @title Easy API for running a model
+#' 
+#' @description This function provides a simple wrapper for performing a single 
+#' or replicated model execution with a single set of parameters.
+#' 
+#' @param m.dir The installation directory of some repast model
+#' @param m.ds The name of any model aggregate dataset
+#' @param m.time The total simulated time
+#' @param r The number of replications
+#' @param default The alternative values for the default model parameters
+#' 
+#' @export
+Easy.Run<- function(m.dir, m.ds, m.time=300, r=1, default=NULL) {
+  my.model<- Model(modeldir= m.dir, maxtime = m.time, dataset= m.ds, load=TRUE)  
+  
+  ## --- Update if needed the default parameters
+  if(!is.null(default)) {
+    UpdateDefaultParameters(my.model, default)  
+  }
+  
+  v<- Run(my.model, r)
+  v
+}
+
 #' @title Easy API for output stability
 #' 
 #' @description This functions run model several times in order to determine 
@@ -67,13 +91,19 @@ Easy.getPlot<- function(obj, c, key) {
 #' @param tries The number of experiment replications
 #' @param vars The model's output variables for compute CoV
 #' @param FUN The calibration function.
+#' @param default The alternative values for parameters which should be kept fixed
 #' 
 #' @return A list with holding experimnt, object and charts 
 #' 
 #' @export
-Easy.Stability<- function(m.dir, m.ds, m.time=300, parameters, samples=1, tries=100, vars= c(), FUN) {
+Easy.Stability<- function(m.dir, m.ds, m.time=300, parameters, samples=1, tries=100, vars= c(), FUN, default=NULL) {
   my.model<- Model(modeldir=m.dir,maxtime = m.time, dataset=m.ds)
   Load(my.model)
+  
+  ## --- Update if needed the default parameters
+  if(!is.null(default)) {
+    UpdateDefaultParameters(my.model, default)  
+  }
   
   ## --- Sample the parameter space
   sampling<- AoE.RandomSampling(samples, parameters)
@@ -111,7 +141,7 @@ Easy.Stability<- function(m.dir, m.ds, m.time=300, parameters, samples=1, tries=
 
 #' @title Easy API for Morris's screening method
 #' 
-#' @description This functions wraps all calls to perform Morris method.
+#' @description This function wraps all calls to perform Morris method.
 #' 
 #' @param m.dir The installation directory of some repast model
 #' @param m.ds The name of any model aggregate dataset
@@ -132,13 +162,13 @@ Easy.Morris<- function(m.dir, m.ds, m.time=300, parameters, mo.p, mo.r, exp.r, F
   my.model<- Model(modeldir=m.dir,maxtime = m.time, dataset=m.ds)
   Load(my.model)
   
-  ## --- Create Morris object
-  v.morris<- AoE.Morris(parameters,p=mo.p,r=mo.r)
-  
   ## --- Update if needed the default parameters
   if(!is.null(default)) {
     UpdateDefaultParameters(my.model, default)  
   }
+
+  ## --- Create Morris object
+  v.morris<- AoE.Morris(parameters,p=mo.p,r=mo.r)
   
   
   ## --- Get the model declared paramters
@@ -188,7 +218,7 @@ Easy.Morris<- function(m.dir, m.ds, m.time=300, parameters, mo.p, mo.r, exp.r, F
 #' @return A list with holding experimnt, object and charts 
 #' 
 #' @importFrom sensitivity tell
-#' @importFrom sensitivity sobol sobolmartinez sobol2007
+#' @importFrom sensitivity sobol sobolmartinez sobol2007 sobolEff soboljansen
 #' 
 #' @export
 Easy.Sobol<- function(m.dir, m.ds, m.time=300, parameters,exp.n = 500, bs.size = 200, exp.r=1, FUN, default=NULL) {
@@ -205,7 +235,7 @@ Easy.Sobol<- function(m.dir, m.ds, m.time=300, parameters,exp.n = 500, bs.size =
   parms<- GetSimulationParameters(my.model)
   
   ## --- Create a Sobol object
-  my.obj<- AoE.Sobol(n= exp.n, parameters, nb=bs.size, fun.sobol=sobol2007)
+  my.obj<- AoE.Sobol(n= exp.n, parameters, nb=bs.size, fun.sobol=sobolmartinez)
   
   # Build the experimental parameter set
   exp.design<- BuildParameterSet(my.obj$X,parms)
@@ -218,7 +248,7 @@ Easy.Sobol<- function(m.dir, m.ds, m.time=300, parameters,exp.n = 500, bs.size =
   for(k in colnames(o)) {
     if(k != "pset") {
       m<- t(df2matrix(getExperimentOutput(exp),c(k)))
-      tell(my.obj,m)
+      tell(my.obj, m)
       
       # -- First order indexes
       chart_0<- Plot.Sobol(my.obj, 1, paste("Sobol indexes for", k))
@@ -270,6 +300,9 @@ Easy.Setup<- function(model, deployment=c()){
   
   jvm.setOut("SystemOut.log")
   PB.enable()
+  
+  ## -- Reset stats
+  enginestats.reset()
 }
 
 #' @title Easy.Calibration

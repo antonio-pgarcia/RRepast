@@ -3,9 +3,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
+- Easy.Run Compact call for running a simulation model
+- hybrid.distance A helper function for calculating categorical/quantitative metric
+- hybrid.value A helper function for generating a list with a value and a range
+- enginestats.reset Reset the internal statistics
+- enginestats.calls Update/return the number of model invocations
 
 ### Changed
 - Run models from Repast source directory
+- Easy.Stability Added a new parameter for modifying the default model parameters
 
 ### Fixed
 

@@ -30,6 +30,6 @@ Easy.Morris(m.dir, m.ds, m.time = 300, parameters, mo.p, mo.r, exp.r, FUN,
 A list with holding experimnt, object and charts
 }
 \description{
-This functions wraps all calls to perform Morris method.
+This function wraps all calls to perform Morris method.
 }
 

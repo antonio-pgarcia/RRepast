@@ -71,10 +71,20 @@ PB.isEnabled<- function() {
 #'
 #' @export
 PB.init<- function(psets, replications) {
-  
   ## -- Check if init function has already been called from RunExperiment
-  if(length(grep("(RunExperiment\\s*\\()|(Run\\s*\\()",sys.calls())) == 2) {
-    ##print(grep("(RunExperiment\\s*\\()|(Run\\s*\\()",sys.calls(),value=TRUE))
+  called.from<- function(callstack) {
+    result<- FALSE
+    v<- grep("(RunExperiment\\s*\\()|(^Run\\s*\\()",callstack)
+    if(length(v) == 2) {
+      if(v[2] == (v[1] + 1) )  {
+        result<- TRUE
+      }
+    } 
+    result
+  }
+  
+  if(called.from(sys.calls())) {
+    ##print(grep("(RunExperiment\\s*\\()|(^Run\\s*\\()",sys.calls()))
     return()
   }
   

@@ -30,6 +30,9 @@
   # progress bar internals
   assign("pkg.progressbar", NULL, pkg.globals)
   assign("pkg.progressbar.enabled", FALSE, pkg.globals)
+  
+  # stats
+  assign("pkg.stats.calls", 0, pkg.globals)
 
   # default values for model
   assign("pkg.outputdir",paste0(Sys.getenv("TMP"),"/rrepast-deployment/"), pkg.globals)

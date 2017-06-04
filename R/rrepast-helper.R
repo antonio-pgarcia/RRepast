@@ -214,3 +214,47 @@ col.sum<- function(d,skip=c()) {
   
   return(v)
 }
+
+#' @title hybrid.value
+#'
+#' @description A simple helper function for generating the input list for 
+#' the function 'hybrid.distance'. This list must hold the value and a range
+#' centered over the value. 
+#'
+#' @param value The reference value
+#' @param distance The distance interval.
+#'
+#' @return The list holding the value and the interval 'min --- value --- max'
+#'
+#' @export
+hybrid.value<- function(value, distance) {
+  vv<- value * distance
+  list(value=value, min=(value-vv), max=(value+vv))
+}
+                           
+#' @title hybrid.distance
+#'
+#' @description Calculates the distance between some value a reference 
+#' target value. It is an hybrid distance because when the value falls
+#' whithin a reference range the distance is 0, otherwise the distance 
+#' between the value and the reference value is calculated using the user
+#' provided distance function.
+#'
+#' @param value The value which will be compared against the reference
+#' @param reference The reference value. It should be a list holding the value, the range of values.
+#' @param FUN The distance function. The default is the NRMSD
+#'
+#' @return The distance metric
+#'
+#' @export
+hybrid.distance<- function(value, reference, FUN=AoE.NRMSD) {
+  if(!is.list(reference)) stop("reference must be list", call. = FALSE)
+  if(is.null(reference[["value"]])) stop("reference must a member named 'value'", call. = FALSE)
+  if(is.null(reference[["min"]])) stop("reference must a member named 'min'", call. = FALSE)
+  if(is.null(reference[["max"]])) stop("reference must a member named 'max'", call. = FALSE)
+  
+  FUN( ifelse(( value >= reference$min & value <= reference$max ), reference$value, value), reference$value ) 
+}
+
+
+

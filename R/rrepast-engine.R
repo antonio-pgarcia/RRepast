@@ -209,6 +209,33 @@ configModelDirs<- function(s) {
   setModelLibDir(paste0(getModelDir(),"/lib"))
 }
 
+# Stats ----------
+
+#' @title enginestats.reset
+#' @description  Reset internal statistics
+#'
+#' @export
+enginestats.reset<- function() {
+  assign("pkg.stats.calls", 0, pkg.globals)
+}
+
+#' @title enginestats.calls
+#' @description  Return the current calls to the 'Engine.RunModel' function
+#' 
+#' @param increment A flag telling to increment and update the counter
+#'
+#' @return The number of calls to 'Engine.RunModel' 
+#' @export
+enginestats.calls<- function(increment=FALSE) {
+  v<- get("pkg.stats.calls", pkg.globals)
+  if(increment) {
+    v<- v + 1
+    assign("pkg.stats.calls", v, pkg.globals)  
+  }
+  v
+}
+
+
 # Setters and Getters ----------
 
 #' @title Sets the model name
@@ -692,6 +719,7 @@ Engine.getId<- function(e) {
 #'
 #' @export
 Engine.RunModel<- function(e) {
+  enginestats.calls(TRUE)
   .jcall(e,"V","RunModel")
 }
 
@@ -735,6 +763,7 @@ Engine.GetModelOutput<- function(e) {
 #'
 #' @export
 Engine.Finish<- function(e) {
+  enginestats.reset()
   .jcall(e,"V","cleanUpBatch")
 }
 
