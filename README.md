@@ -2,6 +2,8 @@
 
 Invoke and analyze 'Repast Simphony' Simulation Models 
 
+[![Rdoc](http://www.rdocumentation.org/badges/version/rrepast)](http://www.rdocumentation.org/packages/rrepast)
+
 ## Description
 
 An R and Repast integration tool for running individual-based

@@ -312,6 +312,6 @@ AoE.GetMorrisOutput<- function(obj) {
 AoE.Sobol<- function(n=100, factors=c(), o=2, nb=100, fun.doe=AoE.LatinHypercube, fun.sobol=sobolmartinez) {
   p.x1<- fun.doe(n,factors)
   p.x2<- fun.doe(n,factors)
-  v<- fun.sobol(model = NULL, X1 = p.x1,X2 = p.x2, order = o, nboot = nb)
+  v<- fun.sobol(model = NULL, X1 = p.x1,X2 = p.x2, order = o, nboot = nb, conf=0.9)
   return(v)
 }
