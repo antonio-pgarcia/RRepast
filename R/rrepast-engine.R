@@ -277,6 +277,20 @@ getKeyRandom<- function() {
   return(get("pkg.randomSeed", pkg.globals))
 }
 
+#' @title parallelize
+#' @description Tells R/Repast to use multicore. Default 
+#' is using just one core.
+#'
+#' @return Boolean with current state
+#'
+#' @export
+parallelize<- function(v=NULL) {
+  if(!is.null(v)) {
+    assign("pkg.parallelize", v, pkg.globals)
+  }
+  get("pkg.parallelize", pkg.globals)
+}
+
 #' @title Sets output directory
 #'
 #' @description Configure the desired directoy to save model

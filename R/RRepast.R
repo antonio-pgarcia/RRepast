@@ -33,6 +33,9 @@
   
   # stats
   assign("pkg.stats.calls", 0, pkg.globals)
+  
+  # parallelize
+  assign("pkg.parallelize", FALSE, pkg.globals)
 
   # default values for model
   assign("pkg.outputdir",paste0(Sys.getenv("TMP"),"/rrepast-deployment/"), pkg.globals)

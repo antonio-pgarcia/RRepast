@@ -74,7 +74,7 @@ PB.init<- function(psets, replications) {
   ## -- Check if init function has already been called from RunExperiment
   called.from<- function(callstack) {
     result<- FALSE
-    v<- grep("(RunExperiment\\s*\\()|(^Run\\s*\\()",callstack)
+    v<- grep("(^RunExperiment\\s*\\()|(^Run\\s*\\()",callstack)
     if(length(v) == 2) {
       if(v[2] == (v[1] + 1) )  {
         result<- TRUE
@@ -95,6 +95,7 @@ PB.init<- function(psets, replications) {
     total<- psets * replications
     pbar<- txtProgressBar(min = 0, max = total, style = 3)
     pbar$pset<- 1
+    pbar$rnum<- 1
     pbar$replications<- replications
     PB.set(pbar)
   }
@@ -108,7 +109,7 @@ PB.init<- function(psets, replications) {
 #' @export
 PB.close<- function() {
   ## -- Check if init function has already been called from RunExperiment
-  if(length(grep("(RunExperiment\\s*\\()|(Run\\s*\\()",sys.calls())) == 2) {
+  if(length(grep("(^RunExperiment\\s*\\()|(^Run\\s*\\()",sys.calls())) == 2) {
     return()
   }
   
@@ -142,6 +143,25 @@ PB.pset<- function(v) {
   }
 }
 
+#' @title PB.rnum
+#'
+#' @description Update run number value
+#'
+#' @param v The current run number
+#'
+#' @export
+PB.rnum<- function(v) {
+  if(PB.isEnabled()) {
+    pbar<- PB.get()
+    if(!is.null(pbar)) {
+      pbar$rnum<- v
+      PB.set(pbar)
+    }  else {
+      stop("Progress bar has not been initialized!")
+    }
+  }
+}
+
 #' @title PB.update
 #'
 #' @description Update progress bar
@@ -151,12 +171,16 @@ PB.pset<- function(v) {
 #' @importFrom utils setTxtProgressBar txtProgressBar
 #'
 #' @export
-PB.update<- function(r) {
+PB.update<- function(r=NULL) {
   if(PB.isEnabled()) {
     pbar<- PB.get()
     if(!is.null(pbar)) {
+      if(is.null(r)) {
+        r<- pbar$rnum
+      } else {
+        PB.rnum(r)
+      }
       setTxtProgressBar(pbar, (pbar$pset-1)*pbar$replications + r)
-      
     }  else {
       stop("Progress bar has not been initialized!")
     }

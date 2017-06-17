@@ -161,6 +161,7 @@ AoE.Base<- function(m, factors=c(), fun=NULL) {
 #'
 #' @param n The number of samples
 #' @param factors The model's parameters which will be evaluated
+#' @param convert Adjust experiment matrix to parameter scale
 #'
 #' @return The LHS design matrix for provided parameters
 #'
@@ -171,12 +172,16 @@ AoE.Base<- function(m, factors=c(), fun=NULL) {
 #'
 #' @importFrom lhs randomLHS
 #' @export
-AoE.LatinHypercube<- function(n=10, factors=c()) {
+AoE.LatinHypercube<- function(n=10, factors=c(), convert= TRUE) {
   k<- GetFactorsSize(factors)
   
   # --- Generate design matrix
-  design<- AoE.Base(randomLHS(n, k), factors)
-  return(design)
+  if(convert) {
+    design<- AoE.Base(randomLHS(n, k), factors)
+  } else {
+    design<- randomLHS(n, k)
+  }
+  design
 }
 
 #' @title AoE.FullFactorial design generator
@@ -310,8 +315,8 @@ AoE.GetMorrisOutput<- function(obj) {
 #' @importFrom sensitivity sobol sobolmartinez sobol2007
 #' @export
 AoE.Sobol<- function(n=100, factors=c(), o=2, nb=100, fun.doe=AoE.LatinHypercube, fun.sobol=sobolmartinez) {
-  p.x1<- fun.doe(n,factors)
-  p.x2<- fun.doe(n,factors)
-  v<- fun.sobol(model = NULL, X1 = p.x1,X2 = p.x2, order = o, nboot = nb, conf=0.9)
+  p.x1<- fun.doe(n, factors)
+  p.x2<- fun.doe(n, factors)
+  v<- fun.sobol(model = NULL, X1 = p.x1,X2 = p.x2, order = o, nboot = nb, conf=0.95)
   return(v)
 }

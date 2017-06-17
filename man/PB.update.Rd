@@ -4,7 +4,7 @@
 \alias{PB.update}
 \title{PB.update}
 \usage{
-PB.update(r)
+PB.update(r = NULL)
 }
 \arguments{
 \item{r}{The current replication number}

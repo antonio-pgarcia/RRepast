@@ -13,14 +13,15 @@
 #' 
 #' @description Initialize the parallel execution environment for R/Repast
 #' 
-#' @importFrom parallel detectCores makeCluster stopCluster
-#' @importFrom doParallel registerDoParallel
+#' @importFrom doSNOW registerDoSNOW 
+#' @importFrom snow makeCluster
+#' @importFrom parallel detectCores
 #' 
 #' @export
 ParallelInit<- function() {
   ## --- Prepare the parallel environment for running 
-  run.cluster<<- makeCluster((detectCores() - 1))
-  registerDoParallel(run.cluster)  
+  run.cluster<<- makeCluster((detectCores() - 1)) #, outfile="")
+  registerDoSNOW(run.cluster)  
 }
 
 #' @title ParallelClose
@@ -46,8 +47,8 @@ ParallelClose<- function() {
 #' number of \code{r} parameter.
 #'
 #' @param modeldir The installation directory of some repast model
-#' @param maxtime The total simulated time
 #' @param datasource The name of any model aggregate dataset
+#' @param maxtime The total simulated time
 #' @param r The number of experiment replications
 #' @param seed The random seed collection
 #' @param design The desing matrix holding parameter sampling
@@ -60,10 +61,8 @@ ParallelClose<- function() {
 #'    output<- ParallelRun(modeldir= md, maxtime = 360, dataset= ds, r=4)} 
 #'
 #' @importFrom stats runif
-#' @importFrom doParallel registerDoParallel
-#' @importFrom foreach foreach %dopar%
 #' @export
-ParallelRun<- function(modeldir, maxtime, datasource, r=1, seed=c(), design=NULL, default=NULL) {
+ParallelRun<- function(modeldir, datasource, maxtime, r=1, seed=c(), design=NULL, default=NULL) {
   # The default behaviour is if seed set was
   # not provided generate a suitable set of
   # random seeds for the number of replications.
@@ -88,7 +87,8 @@ ParallelRun<- function(modeldir, maxtime, datasource, r=1, seed=c(), design=NULL
   results<- c()
   
   ## --- The parallel body
-  run.body<- function(modeldir, maxtime, datasource, i, r, seed, design, default= NULL) {
+  run.body<- function(modeldir, datasource, maxtime, i, r, seed, design, default= NULL) {
+    print("test")
     e<- Model(modeldir, maxtime, datasource, load=TRUE)
     if(r > 1) {
       ## --- Setting the random seed for experiment replication
@@ -114,20 +114,27 @@ ParallelRun<- function(modeldir, maxtime, datasource, r=1, seed=c(), design=NULL
     data$run<- i
     ## --- Add replication data
     AddResults(data)
-    ## --- Update progress bar
-    PB.update(i)
     data
   }
   
   ## --- The test parallel body
-  ftest<- function(modeldir, maxtime, datasource, i, r, seed) {
+          
+  ftest<- function(modeldir, datasource, maxtime, i, r, seed, design, default= NULL) {
     Sys.sleep(10)
     i
   }
   
+  ## --- Progress bar function
+  progress<- function(n) { 
+    print(sprintf("PB.update(%d)",n))
+    PB.update(n) 
+  }
+  opts<- list(progress=progress)
+
   ## --- The parallel loop
-  results<- foreach(i=1:r, .combine=rbind, .packages=c('rJava')) %dopar% {  
-    run.body(modeldir, maxtime, datasource, i ,r, seed, design, default)
+  results<- foreach(i=1:r, .combine=rbind, .packages=c('rJava'), .inorder=FALSE, .options.snow=opts) %dopar% {  
+    run.body(modeldir, datasource, maxtime, i ,r, seed, design, default)
+    # (mock test) --- ftest(modeldir, datasource, maxtime, i ,r, seed, design, default)
   }
 
   ## --- Progress Bar clean up
@@ -147,8 +154,8 @@ ParallelRun<- function(modeldir, maxtime, datasource, r=1, seed=c(), design=NULL
 #' greater than zero otherwise.
 #'
 #' @param modeldir The installation directory of some repast model
-#' @param maxtime The total simulated time
 #' @param datasource The name of any model aggregate dataset
+#' @param maxtime The total simulated time
 #' @param r The number of experiment replications
 #' @param design The desing matrix holding parameter sampling
 #' @param FUN THe calibration function.
@@ -166,49 +173,133 @@ ParallelRun<- function(modeldir, maxtime, datasource, r=1, seed=c(), design=NULL
 #' @importFrom foreach foreach %dopar%
 #' @importFrom doParallel registerDoParallel
 #' @export
-ParallellRunExperiment<- function(modeldir, maxtime, datasource, r=1, design, FUN, default=NULL) {
+ParallellRunExperiment<- function(modeldir, datasource, maxtime, r=1, design, FUN, default=NULL) {
   paramset<- c()
   output<- c()
   dataset<- c()
+  
+  fpackages= names(sessionInfo()$otherPkgs)
   
   psets<- nrow(design)
   
   e<- Model(modeldir, maxtime, datasource, load=TRUE)
   p<- GetSimulationParameters(e)
-  design<- BuildParameterSet(design, p)
+  experimental.design<- BuildParameterSet(design, p)
   
   ## --- Progress Bar initialization
   PB.init(psets, r)
   
   ## --- The parallel body
-  run.body<- function(modeldir, maxtime, datasource, pset, r, design, FUN, default=NULL) {
-    PB.pset(pset) # -- Update progress bar pset value
+  run.body<- function(modeldir, datasource, maxtime, pset, r, design, FUN, default=NULL) {
     this.design<- design[pset,]
-    results<- ParallelRun(modeldir, maxtime, datasource, r, c(), this.design, default) 
+    results<- WrapperRun(modeldir, datasource, maxtime, r, c(), this.design, default, FALSE) 
     cbind(pset, results)
   }
+
+  ## --- Progress bar function
+  progress<- function(n) { 
+    #print(sprintf("PB.pset(%d)",n))
+    PB.pset(n)
+    PB.update() 
+  }
+  opts<- list(progress=progress)
+  
   
   ## --- The parallel loop
-  dataset<- foreach(i=1:psets, .combine=rbind, .packages=c('rJava')) %dopar% {  
-    run.body(modeldir, maxtime, datasource, i , r, design, FUN, default)
+  dataset<- foreach(i=1:psets, .combine=rbind, .packages=c('rJava'),  .inorder=FALSE, .options.snow=opts) %dopar% { 
+    run.body(modeldir, datasource, maxtime, i , r, experimental.design, FUN, default)
+  }
+  
+
+  body.calibration<- function(pset, dataset) {
+    results<- dataset[dataset$pset == pset,]  
+    calibration<- FUN(d, results)             # --- Calibration function
+    if(is.null(calibration)) {
+      stop("Invalid user provided calibration function!")
+    }
+    cbind(pset,calibration)
+  }
+  
+  output<- foreach(i=1:psets, .combine=rbind, .packages=c(fpackages)) %dopar% { 
+    body.calibration(i, dataset)
   }
   
   for(pset in 1:psets) {
     d<- design[pset,]
-    results<- dataset[dataset$pset == pset,]
-    calibration<- FUN(d, results) # --- Calibration function
-    
-    if(is.null(calibration)) {
-      stop("Invalid user provided calibration function!")
-    }
-
     paramset<- rbind(paramset,cbind(pset,d))
-    output<- rbind(output,cbind(pset,calibration))
-
   }
   
   ## --- Progress Bar clean up
   PB.close()
-  
   return(list(paramset=paramset, output=output, dataset=dataset))
+}
+
+
+
+#' @title WrapperRun
+#'
+#' @description Wrapper for the Run and ParallelRun functions
+#'
+#' @param modeldir The installation directory of some repast model
+#' @param datasource The name of any model aggregate dataset
+#' @param maxtime The total simulated time
+#' @param r The number of experiment replications
+#' @param seed The random seed collection
+#' @param design The desing matrix holding parameter sampling
+#' @param default The alternative values for parameters which should be kept fixed
+#' @param multi allows forcing single core execution, default is using multi-core
+#'
+#' @return The model output dataset
+#'
+#' @export
+WrapperRun<- function(modeldir, datasource, maxtime,  r=1, seed=c(), design=NULL, default=NULL, multi=TRUE) {
+  if(!parallelize() || !multi) {
+    my.model<- Model(modeldir, maxtime, datasource, load=TRUE)  
+    ## --- Update if needed the default parameters
+    if(!is.null(default)) {
+      UpdateDefaultParameters(my.model, default)  
+    }
+    v<- Run(my.model, r)
+  } else {
+    ParallelInit()
+    v<- ParallelRun(modeldir, maxtime, datasource, r, seed=c(), design, default)
+    ParallelClose()
+  } 
+  v
+}
+
+#' @title WrapperRunExperiment
+#'
+#' @description Wrapper for the RunExperiment and ParallelRunExperiment 
+#' functions
+#'
+#' @param modeldir The installation directory of some repast model
+#' @param maxtime The total simulated time
+#' @param datasource The name of any model aggregate dataset
+#' @param r The number of experiment replications
+#' @param seed The random seed collection
+#' @param design The desing matrix holding parameter sampling
+#' @param default The alternative values for parameters which should be kept fixed
+#'
+#' @return The model output dataset
+#'
+#' @export
+WrapperRunExperiment<- function(modeldir, datasource, maxtime, r=1, design, FUN, default=NULL) {
+  if(!parallelize()) {
+    my.model<- Model(modeldir, maxtime, datasource, load=TRUE)
+    ## --- Update if needed the default parameters
+    if(!is.null(default)) {
+      UpdateDefaultParameters(my.model, default)  
+    }
+    ## --- Get the model declared paramters
+    parameters<- GetSimulationParameters(my.model)
+    # Build the experimental parameter set
+    experiment<- BuildParameterSet(design, parameters)
+    v<- RunExperiment(my.model, r, experiment, FUN)
+  } else {
+    ParallelInit()
+    v<- ParallellRunExperiment(modeldir, datasource, maxtime, r, design, FUN, default)
+    ParallelClose()
+  }
+  v
 }
