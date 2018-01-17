@@ -185,7 +185,7 @@ Easy.Morris<- function(m.dir, m.ds, m.time=300, parameters, mo.p, mo.r, exp.r, F
   o<- getExperimentOutput(exp)
   for(k in colnames(o)) {
     if(k != "pset") {
-      m<- t(df2matrix(getExperimentOutput(exp),c(k)))
+      m<- as.vector(df2matrix(getExperimentOutput(exp),c(k)))
       tell(v.morris,m)
       
       ## --- Plot Morris output
@@ -259,13 +259,14 @@ Easy.Sobol<- function(m.dir, m.ds, m.time=300, parameters,exp.n = 500, bs.size =
   # (2017/06/10) -----> exp<- RunExperiment(my.model,r=exp.r,exp.design,FUN)
   
   exp<- WrapperRunExperiment(m.dir, m.ds, m.time, exp.r, my.obj$X, FUN, default)
-
+  debug.exp<<- exp
   charts<- c()
   o<- getExperimentOutput(exp)
   for(k in colnames(o)) {
     if(k != "pset") {
       m<- t(df2matrix(getExperimentOutput(exp),c(k)))
       #tell(my.obj,  fix.outliers(m))
+      #tell(my.obj, (m-mean(m))/sd(m))
       tell(my.obj, m)
       
       # -- First order indexes
