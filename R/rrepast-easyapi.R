@@ -301,7 +301,6 @@ Easy.Sobol<- function(m.dir, m.ds, m.time=300, parameters,exp.n = 500, bs.size =
 #' 
 #' @export
 Easy.Setup<- function(model, deployment=c()){
-  
   ## Check if model has been configured with the integration code
   if(!config.check(model)) {
     config.copylib(model)

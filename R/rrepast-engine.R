@@ -95,7 +95,7 @@ config.scenario<- function(modelpath, uninstall=FALSE) {
         txts<- readLines(fscenario, warn= FALSE)
         for(j in 1:length(txts)) {
           v[i]<- txts[j]
-          if(length(grep("<Scenario>",txts[j]))) {
+          if(length(grep("<Scenario.*>",txts[j]))) {
             v[(i<- i + 1)]<- xml.integration()
           }
           i<- i + 1
@@ -122,6 +122,8 @@ config.scenario<- function(modelpath, uninstall=FALSE) {
 #'
 #' @param modelpath The path where model is installed
 #' @param uninstall If TRUE uninstall integration jar
+#' 
+#' @return TRUE if install operation succed
 #'
 #' @export
 config.copylib<- function(modelpath, uninstall=FALSE) {
@@ -129,7 +131,7 @@ config.copylib<- function(modelpath, uninstall=FALSE) {
   jjar<- "rrepast-integration.jar"
   ljar<- paste0(getModelLibDir(),"/",jjar)
   sjar<- jarfile(jjar)
-  
+  v<- FALSE
   if(file.exists(ljar)) {
     if(uninstall) {
       v<- file.remove(ljar)
