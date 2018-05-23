@@ -81,6 +81,8 @@ jarfile<- function(fjar) {
 #'
 #' @param modelpath The path where model is installed
 #' @param uninstall If TRUE restore original scenario.xml file
+#' 
+#' @return A logical TRUE if the model's scenario file has been modified
 #'
 #' @export
 config.scenario<- function(modelpath, uninstall=FALSE) {
@@ -97,12 +99,13 @@ config.scenario<- function(modelpath, uninstall=FALSE) {
           v[i]<- txts[j]
           if(length(grep("<Scenario.*>",txts[j]))) {
             v[(i<- i + 1)]<- xml.integration()
+            status<- TRUE
           }
           i<- i + 1
         }
-        ## Write the new scenario file
+        ## Write the new scenario file when integration succeed
         writeLines(v,fscenario)
-        status<- TRUE
+        
       }
     }
   } else {

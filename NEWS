@@ -3,18 +3,38 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
+
+### Changed
+- Run models from Repast source directory
+
+### Fixed
+
+## R/Repast [0.7.0] - 2018-05-23
+### Added
 - Easy.Run Compact call for running a simulation model
 - hybrid.distance A helper function for calculating categorical/quantitative metric
 - hybrid.value A helper function for generating a list with a value and a range
 - enginestats.reset Reset the internal statistics
 - enginestats.calls Update/return the number of model invocations
+- rrepast-plots.R New file for separate the ploting functions
+- rrepast-parallel.R New file adding parallel model execution support
+- parallelize Configure R/Repast for running model in parallel using multicore
+- ParallelInit Initialize the parallel execution environment
+- ParallelClose Shutdown the parallel execution environment
+- ParallelRun Parallel model execution
+- ParallellRunExperiment Parallel experimental setup execution
+- WrapperRun Facade for model execution
+- WrapperRunExperiment Facade for experiment execution
+
 
 ### Changed
-- Run models from Repast source directory
 - Easy.Stability Added a new parameter for modifying the default model parameters
+- Easy.Setup Checks added
+- Easy.Sobol for parallel execution
 
 ### Fixed
-
+- config.scenario Bug detecting the <Scenario> tag
+- config.copylib Bug on returning value
 
 
 ## R/Repast [0.6.0] - 2017-03-27

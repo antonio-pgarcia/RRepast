@@ -297,15 +297,23 @@ Easy.Sobol<- function(m.dir, m.ds, m.time=300, parameters,exp.n = 500, bs.size =
 #' the base directory. The deployment directory is \code{/rrepast-deployment/}.
 #' 
 #' @param model The base directory where Repast model is installed.
+#' @param multicore Bolean flag indicating to use multiplecore.
 #' @param deployment The directory to save the output and logs.
 #' 
 #' @export
-Easy.Setup<- function(model, deployment=c()){
+Easy.Setup<- function(model, multicore=FALSE, deployment=c()){
   ## Check if model has been configured with the integration code
   if(!config.check(model)) {
-    config.copylib(model)
-    config.scenario(model)
+    if(!config.copylib(model)) {
+      stop("Error deploying integration libraries!")
+    }
+    if(!config.scenario(model)) {
+      stop("Unable to configure integration code!")
+    }
   }
+  
+  ## Multicore selection
+  parallelize(multicore)
   
   if(length(deployment) == 0) {
     deployment<- paste0(model,"/rrepast-deployment/")
