@@ -17,4 +17,3 @@ The original data frame with a new column (sum) holding the sum
 \description{
 Sum all columns but one (pset) of a data frame
 }
-

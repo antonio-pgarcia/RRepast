@@ -19,4 +19,3 @@ Get the parameter names
 Returns the names of all declared model's parameters in
 the parameter.xml file in the scenario directory.
 }
-

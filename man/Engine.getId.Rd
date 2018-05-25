@@ -14,4 +14,3 @@ This function provides a wrapper to the method getId()
 from repast context. The id is basically a String with the currently
 instantiated model name.
 }
-

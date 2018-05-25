@@ -15,4 +15,3 @@ The charts element inside results
 \description{
 Simplify the access to the charts member
 }
-

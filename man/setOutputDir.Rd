@@ -13,4 +13,3 @@ setOutputDir(s)
 Configure the desired directoy to save model
 output data.
 }
-

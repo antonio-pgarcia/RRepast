@@ -9,4 +9,3 @@ PB.enable()
 \description{
 Enables the progress bar visualization
 }
-

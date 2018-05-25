@@ -9,4 +9,3 @@ ParallelInit()
 \description{
 Initialize the parallel execution environment for R/Repast
 }
-

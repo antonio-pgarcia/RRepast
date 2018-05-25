@@ -18,4 +18,3 @@ Loads the model's scenario files
 This function loads the scenario of a Repast Model and
 initialize de model.
 }
-

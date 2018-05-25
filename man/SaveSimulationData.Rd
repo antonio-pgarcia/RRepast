@@ -22,4 +22,3 @@ function.
 The model must have been initialized or user must call
 \code{setId} explicitelly.
 }
-

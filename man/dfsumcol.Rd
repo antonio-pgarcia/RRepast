@@ -19,4 +19,3 @@ The original data frame with a new column (sum) holding the sum
 \description{
 Sum data frame columns but tho
 }
-

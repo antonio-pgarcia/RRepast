@@ -12,4 +12,3 @@ A string value holding the randomSeed name.
 \description{
 Returns the Repast randomSeed parameter name.
 }
-

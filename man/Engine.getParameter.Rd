@@ -18,4 +18,3 @@ The parameter value
 The function gets the value of model
 parameter \code{k} as java.lang.Object
 }
-

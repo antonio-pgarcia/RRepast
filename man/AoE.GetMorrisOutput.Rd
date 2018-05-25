@@ -16,4 +16,3 @@ The results of Morris method
 Returns a dataframe holding the Morris
 result set
 }
-

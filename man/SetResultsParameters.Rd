@@ -13,4 +13,3 @@ SetResultsParameters(d)
 Save the current set of paramters used
 for the last model run.
 }
-

@@ -9,4 +9,3 @@ getId()
 \description{
 Provides the name of the model currently instantiated.
 }
-

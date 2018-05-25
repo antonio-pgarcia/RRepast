@@ -18,4 +18,3 @@ The parameter type string
 Returns the declared type of a Repast
 model parameter
 }
-

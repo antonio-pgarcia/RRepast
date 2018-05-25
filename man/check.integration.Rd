@@ -16,4 +16,3 @@ TRUE if the integration code is correctelly deployed
 Check if the integration jar library is correctelly installed
 in the model lib directory
 }
-

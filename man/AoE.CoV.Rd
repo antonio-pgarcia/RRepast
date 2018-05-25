@@ -16,4 +16,3 @@ The coefficient of variation for data
 A simple funcion for calculate the
 Coefficient of Variation
 }
-

@@ -20,4 +20,3 @@ A sequence between min and max value
 Generate a sequence from min to max using an increment
 based on the number of of elements in v
 }
-

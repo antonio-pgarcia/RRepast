@@ -22,4 +22,3 @@ to fit the model requirements.
    jvm.set_parameters("-server -Xms512m -Xmx2048m")}
 
 }
-

@@ -30,4 +30,3 @@ the parameters of a model.
  d<- DoE.LatinHypercube(2,f)}
 
 }
-

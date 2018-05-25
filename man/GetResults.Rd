@@ -9,4 +9,3 @@ GetResults()
 \description{
 Returns the model results
 }
-

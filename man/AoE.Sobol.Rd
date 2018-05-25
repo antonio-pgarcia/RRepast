@@ -35,4 +35,3 @@ Laurent Gilquin, Joseph Guillaume, Loic Le Gratiet, Paul Lemaitre, Bernardo Ramo
 sensitivity: Sensitivity Analysis. R package version 1.11.1.
 https://CRAN.R-project.org/package=sensitivity
 }
-

@@ -16,4 +16,3 @@ The full path to jar file
 The jarfile returns the full path to some jar file
 available inside rrpast package
 }
-

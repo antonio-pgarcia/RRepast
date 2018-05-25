@@ -15,4 +15,3 @@ The model parameters
 \description{
 Returns the list current model parameters
 }
-

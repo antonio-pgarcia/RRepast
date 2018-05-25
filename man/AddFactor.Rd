@@ -29,4 +29,3 @@ Builds up the factor collection.
    f<- AddFactor(factors=f, name="Weight",min=50,max=120)}
 
 }
-

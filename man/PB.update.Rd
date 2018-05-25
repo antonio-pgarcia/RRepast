@@ -12,4 +12,3 @@ PB.update(r = NULL)
 \description{
 Update progress bar
 }
-

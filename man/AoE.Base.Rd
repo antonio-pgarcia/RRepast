@@ -19,4 +19,3 @@ The design matrix
 \description{
 The Design Of Experiments Base function
 }
-

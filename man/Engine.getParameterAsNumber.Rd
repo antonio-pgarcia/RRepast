@@ -18,4 +18,3 @@ The parmeter value as number
 Get the value of model parameter
 \code{k} as \code{java.lang.Number}
 }
-

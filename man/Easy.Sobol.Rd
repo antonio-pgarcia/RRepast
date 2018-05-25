@@ -23,7 +23,7 @@ Easy.Sobol(m.dir, m.ds, m.time = 300, parameters, exp.n = 500,
 
 \item{exp.r}{The number of experiment replications}
 
-\item{FUN}{The calibration function.}
+\item{FUN}{The objective function.}
 
 \item{default}{The alternative values for parameters which should be kept fixed}
 
@@ -38,4 +38,3 @@ A list with holding experimnt, object and charts
 This functions wraps all required calls to perform 
 Sobol method for global sensitivity analysis.
 }
-

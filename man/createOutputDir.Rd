@@ -15,4 +15,3 @@ Create the, if required, the directory to save the
 output data generate by the model. It is intended for internal
 use.
 }
-

@@ -36,6 +36,7 @@
   
   # parallelize
   assign("pkg.parallelize", FALSE, pkg.globals)
+  assign("pkg.runcluster", NULL, pkg.globals)
 
   # default values for model
   assign("pkg.outputdir",paste0(Sys.getenv("TMP"),"/rrepast-deployment/"), pkg.globals)
@@ -741,7 +742,7 @@ ApplyFactorRange<- function(design, factors) {
 #'
 #'    p<- GetSimulationParameters(e)
 #'
-#'    d<- LatinHypercube(factors=f)
+#'    d<- AoE.LatinHypercube(factors=f)
 #'
 #'    p1<- BuildParameterSet(d,p)}
 #'

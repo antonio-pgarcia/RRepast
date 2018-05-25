@@ -9,4 +9,3 @@ getLogDir()
 \description{
 Returns the value for log directory
 }
-

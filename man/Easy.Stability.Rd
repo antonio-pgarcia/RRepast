@@ -34,4 +34,3 @@ This functions run model several times in order to determine
 how many experiment replications are required for model's output being stable
 (i.e. the convergence of standard deviation)
 }
-

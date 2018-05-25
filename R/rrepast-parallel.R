@@ -13,15 +13,17 @@
 #' 
 #' @description Initialize the parallel execution environment for R/Repast
 #' 
-#' @importFrom doSNOW registerDoSNOW 
-#' @importFrom snow makeCluster
+#' @importFrom doParallel registerDoParallel
+#' @importFrom parallel makeCluster
 #' @importFrom parallel detectCores
 #' 
 #' @export
 ParallelInit<- function() {
   ## --- Prepare the parallel environment for running 
-  run.cluster<<- makeCluster((detectCores() - 1)) #, outfile="")
-  registerDoSNOW(run.cluster)  
+  v<- makeCluster((detectCores() - 1)) #, outfile="")
+  #registerDoSNOW(v)  
+  registerDoParallel(v)
+  assign("pkg.runcluster", v, pkg.globals)
 }
 
 #' @title ParallelClose
@@ -33,7 +35,7 @@ ParallelInit<- function() {
 #' @export
 ParallelClose<- function() {
   ## --- Clean up cluster
-  stopCluster(run.cluster)
+  stopCluster(get("pkg.runcluster", pkg.globals))
 }
   
 #' @title ParallelRun
@@ -63,6 +65,8 @@ ParallelClose<- function() {
 #' @importFrom stats runif
 #' @export
 ParallelRun<- function(modeldir, datasource, maxtime, r=1, seed=c(), design=NULL, default=NULL) {
+  i<- c()
+  
   # The default behaviour is if seed set was
   # not provided generate a suitable set of
   # random seeds for the number of replications.
@@ -87,8 +91,7 @@ ParallelRun<- function(modeldir, datasource, maxtime, r=1, seed=c(), design=NULL
   results<- c()
   
   ## --- The parallel body
-  run.body<- function(modeldir, datasource, maxtime, i, r, seed, design, default= NULL) {
-    print("test")
+  run.body<- function(modeldir, datasource, maxtime, ii, r, seed, design, default= NULL) {
     e<- Model(modeldir, maxtime, datasource, load=TRUE)
     if(r > 1) {
       ## --- Setting the random seed for experiment replication
@@ -111,7 +114,7 @@ ParallelRun<- function(modeldir, datasource, maxtime, r=1, seed=c(), design=NULL
     ## --- Retry output data
     data<- GetOutput(e)
     ## --- Sets the current run number
-    data$run<- i
+    data$run<- ii
     ## --- Add replication data
     AddResults(data)
     data
@@ -119,9 +122,9 @@ ParallelRun<- function(modeldir, datasource, maxtime, r=1, seed=c(), design=NULL
   
   ## --- The test parallel body
           
-  ftest<- function(modeldir, datasource, maxtime, i, r, seed, design, default= NULL) {
+  ftest<- function(modeldir, datasource, maxtime, ii, r, seed, design, default= NULL) {
     Sys.sleep(10)
-    i
+    ii
   }
   
   ## --- Progress bar function
@@ -133,7 +136,7 @@ ParallelRun<- function(modeldir, datasource, maxtime, r=1, seed=c(), design=NULL
 
   ## --- The parallel loop
   results<- foreach(i=1:r, .combine=rbind, .packages=c('rJava'), .inorder=FALSE, .options.snow=opts) %dopar% {  
-    run.body(modeldir, datasource, maxtime, i ,r, seed, design, default)
+    run.body(modeldir, datasource, maxtime, i,r, seed, design, default)
     # (mock test) --- ftest(modeldir, datasource, maxtime, i ,r, seed, design, default)
   }
 
@@ -172,8 +175,10 @@ ParallelRun<- function(modeldir, datasource, maxtime, r=1, seed=c(), design=NULL
 #' @return A list with output and dataset
 #' @importFrom foreach foreach %dopar%
 #' @importFrom doParallel registerDoParallel
+#' @importFrom utils sessionInfo
 #' @export
 ParallellRunExperiment<- function(modeldir, datasource, maxtime, r=1, design, FUN, default=NULL) {
+  i<- c()
   paramset<- c()
   output<- c()
   dataset<- c()
@@ -274,11 +279,11 @@ WrapperRun<- function(modeldir, datasource, maxtime,  r=1, seed=c(), design=NULL
 #' functions
 #'
 #' @param modeldir The installation directory of some repast model
-#' @param maxtime The total simulated time
 #' @param datasource The name of any model aggregate dataset
+#' @param maxtime The total simulated time
 #' @param r The number of experiment replications
-#' @param seed The random seed collection
 #' @param design The desing matrix holding parameter sampling
+#' @param FUN The objective function.
 #' @param default The alternative values for parameters which should be kept fixed
 #'
 #' @return The model output dataset

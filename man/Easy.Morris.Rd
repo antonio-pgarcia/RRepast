@@ -32,4 +32,3 @@ A list with holding experimnt, object and charts
 \description{
 This function wraps all calls to perform Morris method.
 }
-

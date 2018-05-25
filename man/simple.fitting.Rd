@@ -30,4 +30,3 @@ simple.fitting(m.dir, m.ds, m.time = 300, parameters, samples = 100,
 Simple calibration method. Run an experimental setup and select the 
 the best results minimizing the calibration function
 }
-

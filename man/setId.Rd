@@ -12,4 +12,3 @@ setId(s)
 \description{
 Set the name of the model currently instantiated.
 }
-

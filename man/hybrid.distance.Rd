@@ -23,4 +23,3 @@ whithin a reference range the distance is 0, otherwise the distance
 between the value and the reference value is calculated using the user
 provided distance function.
 }
-

@@ -18,9 +18,9 @@ WrapperRunExperiment(modeldir, datasource, maxtime, r = 1, design, FUN,
 
 \item{design}{The desing matrix holding parameter sampling}
 
-\item{default}{The alternative values for parameters which should be kept fixed}
+\item{FUN}{The objective function.}
 
-\item{seed}{The random seed collection}
+\item{default}{The alternative values for parameters which should be kept fixed}
 }
 \value{
 The model output dataset
@@ -29,4 +29,3 @@ The model output dataset
 Wrapper for the RunExperiment and ParallelRunExperiment 
 functions
 }
-

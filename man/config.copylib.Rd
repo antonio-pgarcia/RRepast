@@ -11,8 +11,10 @@ config.copylib(modelpath, uninstall = FALSE)
 
 \item{uninstall}{If TRUE uninstall integration jar}
 }
+\value{
+TRUE if install operation succed
+}
 \description{
 Install or uninstall the integration jar file. This function
 manages the installation process of required jars to the model lib dir.
 }
-

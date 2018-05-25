@@ -13,4 +13,3 @@ Boolean TRUE if progress bar must be shown
 Returns the global value indicating if progress bar
 is enabled.
 }
-

@@ -25,4 +25,3 @@ the parameters of a model.
  d<- AoE.FullFactorial(2,f)}
 
 }
-

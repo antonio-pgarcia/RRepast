@@ -12,4 +12,3 @@ A string with JVM parameters.
 \description{
 Returns the current java virtual machine parameters
 }
-

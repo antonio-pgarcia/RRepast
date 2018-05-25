@@ -15,4 +15,3 @@ The object element inside results
 \description{
 Simplify the access to the object member
 }
-

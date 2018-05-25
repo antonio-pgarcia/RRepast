@@ -15,4 +15,3 @@ The number of parameters in factors collection
 \description{
 Returns the total number of factors
 }
-

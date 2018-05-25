@@ -285,6 +285,9 @@ getKeyRandom<- function() {
 #' @title parallelize
 #' @description Tells R/Repast to use multicore. Default 
 #' is using just one core.
+#' 
+#' @param v A Bollean value telling if use multiple cores. 
+#' When null just returns the current setting
 #'
 #' @return Boolean with current state
 #'

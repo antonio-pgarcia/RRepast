@@ -15,4 +15,3 @@ PB.init(psets, replications)
 Initialize progress bar for model
 execution.
 }
-

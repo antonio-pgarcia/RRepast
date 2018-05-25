@@ -25,4 +25,3 @@ otherwise GetResults must be used.
    data<- GetOutput(m)}
 
 }
-

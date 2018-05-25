@@ -32,4 +32,3 @@ number of \code{r} parameter.
    Run(m,r=2) # or Run(m,r=2,seed=c(1,2))}
 
 }
-

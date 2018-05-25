@@ -213,13 +213,14 @@ Easy.Morris<- function(m.dir, m.ds, m.time=300, parameters, mo.p, mo.r, exp.r, F
 #' @param exp.n The experiment sample size
 #' @param exp.r The number of experiment replications
 #' @param bs.size The bootstrap sample size for sobol method
-#' @param FUN The calibration function.
+#' @param FUN The objective function.
 #' @param default The alternative values for parameters which should be kept fixed
 #' @param fsobol The alternative function for calculating sobol indices
 #' @param fsampl The function for sampling data
 #' 
 #' @return A list with holding experimnt, object and charts 
 #' 
+#' @importFrom stats IQR quantile
 #' @importFrom sensitivity tell
 #' @importFrom sensitivity sobol sobol2002 sobol2007 sobolmartinez soboljansen
 #' 
@@ -259,7 +260,7 @@ Easy.Sobol<- function(m.dir, m.ds, m.time=300, parameters,exp.n = 500, bs.size =
   # (2017/06/10) -----> exp<- RunExperiment(my.model,r=exp.r,exp.design,FUN)
   
   exp<- WrapperRunExperiment(m.dir, m.ds, m.time, exp.r, my.obj$X, FUN, default)
-  debug.exp<<- exp
+  
   charts<- c()
   o<- getExperimentOutput(exp)
   for(k in colnames(o)) {

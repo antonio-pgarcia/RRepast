@@ -19,4 +19,3 @@ This function Calculates the relative squared
 deviation (RSD or CoV) for an used provided column name \code{key}
 in the parameter \code{dataset}.
 }
-

@@ -29,4 +29,3 @@ collection has the raw output of 'Repast' aggregated dataset.
    p<- getExperimentParamSet(e)}
 
 }
-

@@ -40,4 +40,3 @@ greater than zero otherwise.
    v<- RunExperiment(e,r=1,exp.design,my.cost) }
 
 }
-

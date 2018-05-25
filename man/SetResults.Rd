@@ -12,4 +12,3 @@ SetResults(d)
 \description{
 Stores a data.frame
 }
-

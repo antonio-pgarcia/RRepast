@@ -6,6 +6,10 @@
 \usage{
 parallelize(v = NULL)
 }
+\arguments{
+\item{v}{A Bollean value telling if use multiple cores. 
+When null just returns the current setting}
+}
 \value{
 Boolean with current state
 }
@@ -13,4 +17,3 @@ Boolean with current state
 Tells R/Repast to use multicore. Default 
 is using just one core.
 }
-

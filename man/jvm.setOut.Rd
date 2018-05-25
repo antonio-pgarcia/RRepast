@@ -17,4 +17,3 @@ Set the System.out filed to a file
    jvm.setOut("/tmp/SysteOut.log")}
 
 }
-

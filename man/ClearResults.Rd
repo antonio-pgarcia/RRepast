@@ -10,4 +10,3 @@ ClearResults()
 This function is called automatically every
 time Run method is called.
 }
-

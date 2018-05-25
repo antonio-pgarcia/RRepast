@@ -10,4 +10,3 @@ getOutputDir()
 Returns the value of module variable for
 storing the current output directory.
 }
-

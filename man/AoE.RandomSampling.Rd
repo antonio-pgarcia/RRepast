@@ -25,4 +25,3 @@ matrix.
  d<- AoE.RandomSampling(2,f)}
 
 }
-

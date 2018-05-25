@@ -9,4 +9,3 @@ Logger.setLevelInfo()
 \description{
 Configures the underlying logging system
 }
-

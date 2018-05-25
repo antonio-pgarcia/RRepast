@@ -42,4 +42,3 @@ functions \code{\link{GetResults}} and \code{\link{SaveSimulationData}}.
 on Modeling and Computer Simulation, Vol. 16, Issue 1, pp. 1-25, ACM,
 New York, New York, USA (January 2006).
 }
-

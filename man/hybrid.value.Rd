@@ -19,4 +19,3 @@ A simple helper function for generating the input list for
 the function 'hybrid.distance'. This list must hold the value and a range
 centered over the value.
 }
-

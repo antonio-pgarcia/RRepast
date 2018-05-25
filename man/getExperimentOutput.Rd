@@ -20,4 +20,3 @@ running the experimental setup. The \code{output} has the results
 from user provided calibration function. The \code{dataset}
 collection has the raw output of 'Repast' aggregated dataset.
 }
-

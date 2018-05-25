@@ -19,4 +19,3 @@ The n rows holding the best results
 \description{
 Choose the best solutions minimizing the objective function
 }
-

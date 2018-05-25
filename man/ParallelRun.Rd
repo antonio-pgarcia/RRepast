@@ -40,4 +40,3 @@ number of \code{r} parameter.
    output<- ParallelRun(modeldir= md, maxtime = 360, dataset= ds, r=4)} 
 
 }
-

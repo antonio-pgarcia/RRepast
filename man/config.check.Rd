@@ -15,4 +15,3 @@ TRUE when all requisites are met
 \description{
 Verify if the installed model is correctelly configurated.
 }
-

@@ -17,4 +17,3 @@ The parameter type as string
 \description{
 Returns the declared parameter type.
 }
-

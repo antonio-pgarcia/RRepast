@@ -12,4 +12,3 @@ PB.set(obj)
 \description{
 Ses the progress bar descriptor
 }
-

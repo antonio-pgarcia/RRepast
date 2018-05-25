@@ -9,4 +9,3 @@ PB.get()
 \description{
 Gets the the progress bar descriptor
 }
-

@@ -18,4 +18,3 @@ The MAE value for provided datasets
 Calculates the average-error
 magnitude (MAE)
 }
-

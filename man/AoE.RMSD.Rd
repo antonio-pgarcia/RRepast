@@ -18,4 +18,3 @@ The RMSD value for provided datasets
 A simple Root-Mean-Square Deviation
 calculation.
 }
-

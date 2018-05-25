@@ -4,10 +4,12 @@
 \alias{Easy.Setup}
 \title{Easy.Setup}
 \usage{
-Easy.Setup(model, deployment = c())
+Easy.Setup(model, multicore = FALSE, deployment = c())
 }
 \arguments{
 \item{model}{The base directory where Repast model is installed.}
+
+\item{multicore}{Bolean flag indicating to use multiplecore.}
 
 \item{deployment}{The directory to save the output and logs.}
 }
@@ -23,4 +25,3 @@ If the deployment directory is empty the installation
 directory given by the parameter \code{model} is used instead as 
 the base directory. The deployment directory is \code{/rrepast-deployment/}.
 }
-

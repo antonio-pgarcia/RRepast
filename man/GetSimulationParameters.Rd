@@ -16,4 +16,3 @@ A data frame with simulation parameters
 Returns a dataframe with the current set of input
 parameters for the last model run.
 }
-

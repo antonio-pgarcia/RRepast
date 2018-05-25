@@ -19,4 +19,3 @@ The resulting ggplot2 plot object
 \description{
 Generate plot for Sobol's GSA
 }
-

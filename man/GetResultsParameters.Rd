@@ -13,4 +13,3 @@ A data.frame with parameters of the model.
 Returns the current set of paramters used
 for the last model run.
 }
-

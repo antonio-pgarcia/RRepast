@@ -18,4 +18,3 @@ The parameter value as string
 Get the value of model parameter \code{k}
 as \code{java.lang.String}
 }
-

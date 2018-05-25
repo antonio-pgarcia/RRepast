@@ -20,4 +20,3 @@ The resulting ggplot2 plot object
 Generate plot for parameter sets 
 providing best fit
 }
-

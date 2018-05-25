@@ -17,4 +17,3 @@ The parmeter value as double
 \description{
 Get the value of model parameter \code{k} as \code{java.lang.Double}
 }
-

@@ -19,4 +19,3 @@ This function verifies the stability
 of CoV for all columns given by parameter \code{keys}
 or all dataset columns if keys is empty.
 }
-

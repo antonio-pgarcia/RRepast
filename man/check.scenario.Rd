@@ -16,4 +16,3 @@ TRUE if scenario is properly configured
 Check if the scenario.xml is configured with the rrepast
 itegration code
 }
-

@@ -19,4 +19,3 @@ The plot instance
 \description{
 Returns the chart instance
 }
-

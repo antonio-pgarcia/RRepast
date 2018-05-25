@@ -9,4 +9,3 @@ ParallelClose()
 \description{
 Finalize the parallel execution environment for R/Repast
 }
-

@@ -17,4 +17,3 @@ The data frame converted to a matrix
 \description{
 This function converts data frames to matrix data type.
 }
-

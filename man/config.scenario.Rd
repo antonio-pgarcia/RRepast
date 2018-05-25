@@ -11,7 +11,9 @@ config.scenario(modelpath, uninstall = FALSE)
 
 \item{uninstall}{If TRUE restore original scenario.xml file}
 }
+\value{
+A logical TRUE if the model's scenario file has been modified
+}
 \description{
 Add the integration library to the model's configuration
 }
-

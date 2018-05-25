@@ -204,7 +204,8 @@ AoE.FullFactorial<- function(n=10, factors=c()) {
   k<- GetFactorsSize(factors)
   
   # --- calculate n for the aproximate number of samples
-  n<- round(n^(1/k))
+  #n<- round(n^(1/k))
+  n<- ceiling(n^(1/k))
   
   # --- Generate design matrix
   design<- AoE.Base(matrix(nrow = n, ncol = k, seq(1,n)), factors, "SequenceItem")

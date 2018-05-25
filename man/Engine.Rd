@@ -17,4 +17,3 @@ This function creates an instance of Repast model wrapper
 class. Before invoking the function Engine, make sure that
 environment was correctly initialized.
 }
-

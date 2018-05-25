@@ -9,4 +9,3 @@ PB.close()
 \description{
 Close the progress bar descriptor
 }
-

@@ -20,4 +20,3 @@ The filtered data set
 Selects a subset of a data frame, filtering by
 column values.
 }
-

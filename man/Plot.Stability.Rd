@@ -18,4 +18,3 @@ The resulting ggplot2 plot object
 Generate plot for visually access the stability of 
 coefficient of variation as function of simulation sample size.
 }
-

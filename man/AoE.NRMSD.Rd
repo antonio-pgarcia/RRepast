@@ -19,4 +19,3 @@ A simple Normalized Root-Mean-Square
 Deviation calculation using max and min values.
 NRMSD = RMSD(x) / (max(x) - min(x))
 }
-

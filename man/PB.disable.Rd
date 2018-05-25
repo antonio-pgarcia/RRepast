@@ -9,4 +9,3 @@ PB.disable()
 \description{
 Disable the progress bar visualization
 }
-

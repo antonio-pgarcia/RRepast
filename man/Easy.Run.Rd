@@ -21,4 +21,3 @@ Easy.Run(m.dir, m.ds, m.time = 300, r = 1, default = NULL)
 This function provides a simple wrapper for performing a single 
 or replicated model execution with a single set of parameters.
 }
-

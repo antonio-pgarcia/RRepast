@@ -15,4 +15,3 @@ The collection of keys
 \description{
 Gets the list of keys (the factor names)
 }
-

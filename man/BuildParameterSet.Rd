@@ -28,9 +28,8 @@ will be keep fixed along simulation runs.
 
    p<- GetSimulationParameters(e)
 
-   d<- LatinHypercube(factors=f)
+   d<- AoE.LatinHypercube(factors=f)
 
    p1<- BuildParameterSet(d,p)}
 
 }
-
