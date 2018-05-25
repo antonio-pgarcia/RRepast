@@ -27,6 +27,6 @@ the parameters of a model.
 \dontrun{
  f<- AddFactor(name="cyclePoint",min=40,max=90)
  f<- AddFactor(factors=f, name="conjugationCost",min=1,max=80)
- d<- DoE.LatinHypercube(2,f)}
+ d<- AoE.LatinHypercube(2,f)}
 
 }

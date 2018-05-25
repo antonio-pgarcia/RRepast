@@ -9,6 +9,7 @@ Authors@R: c(
 Author: Antonio Prestes Garcia [aut, cre], Alfonso Rodriguez-Paton [aut, ths]
 Maintainer: Antonio Prestes Garcia <antonio.pgarcia@alumnos.upm.es>
 URL: https://github.com/antonio-pgarcia/rrepast
+BugReports: https://github.com/antonio-pgarcia/RRepast/issues
 Description: An R and Repast integration tool for running individual-based
     (IbM) simulation models developed using 'Repast Simphony' Agent-Based framework
     directly from R code supporting multicore execution. This package 

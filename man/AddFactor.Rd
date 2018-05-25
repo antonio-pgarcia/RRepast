@@ -4,7 +4,7 @@
 \alias{AddFactor}
 \title{Adds a paramter to factor collection}
 \usage{
-AddFactor(factors = c(), lambda = "qunif", name, min, max)
+AddFactor(factors = c(), lambda = "qunif", name, min, max, int = FALSE)
 }
 \arguments{
 \item{factors}{The current factor collection}
@@ -16,6 +16,8 @@ AddFactor(factors = c(), lambda = "qunif", name, min, max)
 \item{min}{The minimun of parameter p}
 
 \item{max}{The maximun of parameter p}
+
+\item{int}{Boolean for truncating the factor value}
 }
 \value{
 The collection of created factors

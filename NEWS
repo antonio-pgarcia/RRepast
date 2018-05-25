@@ -31,6 +31,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Easy.Stability Added a new parameter for modifying the default model parameters
 - Easy.Setup Checks added
 - Easy.Sobol for parallel execution
+- AddFactor New parameter for truncating values
 
 ### Fixed
 - config.scenario Bug detecting the <Scenario> tag

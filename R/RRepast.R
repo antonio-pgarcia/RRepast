@@ -654,6 +654,7 @@ SaveSimulationData<- function(as="csv", experiment=NULL) {
 #' @param name The name of factor
 #' @param min The minimun of parameter p
 #' @param max The maximun of parameter p
+#' @param int Boolean for truncating the factor value
 #'
 #' @examples \dontrun{
 #'    f<- AddFactor(name="Age",min=20,max=60)
@@ -662,13 +663,13 @@ SaveSimulationData<- function(as="csv", experiment=NULL) {
 #' @return The collection of created factors
 #'
 #' @export
-AddFactor<- function(factors=c(), lambda="qunif",name, min, max) {
+AddFactor<- function(factors=c(), lambda="qunif",name, min, max, int=FALSE) {
   if(max < min) {
     stop("Invalid factor range!")
   }
 
   # if parameter already existe replace the current value
-  rrow<- c(lambda=lambda,name=name,min=min,max=max)
+  rrow<- c(lambda=lambda,name=name,min=min,max=max, int=int)
   rownames(rrow)<- NULL
   if(length(factors) > 0 && factors[,"name"] == name) {
     i<- which(factors[,"name"] == name)
@@ -707,8 +708,16 @@ GetFactorsSize<- function(factors) {
 #'
 #' @export
 ApplyFactorRange<- function(design, factors) {
+  # trunc if flag 'f' is true
+  trunciftrue<- function(v, f) {
+    if(f) {
+      v<- trunc(v)
+    }
+    v
+  }
+  
   k<- GetFactorsSize(factors)
-  d<- sapply(1:k, function(p) {match.fun(factors[p,"lambda"])(design[,p],as.numeric(factors[p,"min"]),as.numeric(factors[p,"max"]))})
+  d<- sapply(1:k, function(p) {trunciftrue(match.fun( factors[p,"lambda"])(design[,p],as.numeric(factors[p,"min"]),as.numeric(factors[p,"max"])), factors[p,"int"])})
 
   if(is.null(nrow(d))) {
     ## --- Handle the case where sample size is 1
