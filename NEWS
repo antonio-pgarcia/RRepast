@@ -9,7 +9,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
-## R/Repast [0.7.0] - 2018-05-23
+## R/Repast [0.7.0] - 2018-06-25
 ### Added
 - Easy.Run Compact call for running a simulation model
 - hybrid.distance A helper function for calculating categorical/quantitative metric
@@ -25,6 +25,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - ParallellRunExperiment Parallel experimental setup execution
 - WrapperRun Facade for model execution
 - WrapperRunExperiment Facade for experiment execution
+- lcontains Auxiliary function for checking if a list contains an element 
+- lget Auxiliary function for getting a list element value
+- AddFactor0 Polimorphic function for creating factos with range and levels
+- GetFactorLevels Returns the levels of a R/Repast factor
 
 
 ### Changed

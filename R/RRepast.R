@@ -671,13 +671,105 @@ AddFactor<- function(factors=c(), lambda="qunif",name, min, max, int=FALSE) {
   # if parameter already existe replace the current value
   rrow<- c(lambda=lambda,name=name,min=min,max=max, int=int)
   rownames(rrow)<- NULL
-  if(length(factors) > 0 && factors[,"name"] == name) {
+  if(length(factors) > 0 && any(factors[,"name"] == name)) {
     i<- which(factors[,"name"] == name)
     factors[i,]<- c(rrow)
   } else {
     factors<- rbind(factors,c(rrow))
   }
   return(factors)
+}
+
+#' @title AddFactor0
+#'
+#' @description Creates or appends the factor collection
+#'
+#' @param factors The current factor collection
+#' @param ... The variadic parameter list
+#'
+#' @examples \dontrun{
+#'    f<- AddFactor0(name="Age",min=20,max=60)
+#'    f<- AddFactor0(factors=f, name="Weight",min=50,max=120)}
+#'
+#' @return The factor collection
+#'
+#' @export
+AddFactor0<- function(factors=c(), ...) {
+  argv<- list(...)
+  
+  ## Default value 
+  v.lambda<- ifelse(is.null(lget(argv,"lambda")), "qunif", lget(argv,"lambda"))
+  v.int<- ifelse(is.null(lget(argv,"int")), FALSE, lget(argv,"int"))
+  
+  ## Inner auxiliary functions
+  is.range<- function(v) {
+    (lcontains(v,"name") && lcontains(v,"min") && lcontains(v,"max") && (!lcontains(v,"levels")))    
+  }
+  is.levels<- function(v) {
+    (lcontains(v,"name") && lcontains(v,"levels") && !(lcontains(v,"min") || lcontains(v,"max")))    
+  }
+  
+  
+    
+  ## Getting the values 
+  if(is.range(argv)) {
+    name<- lget(argv,"name")  
+    v.min<- lget(argv,"min")
+    v.max<- lget(argv,"max")  
+    if(v.max < v.min) {
+      stop("Invalid factor range!")
+    }
+    
+    rrow<- c(lambda=v.lambda,name=name,min=v.min,max=v.max, int=v.int)
+  } else {
+    if (is.levels(argv)) {
+      name<- lget(argv,"name")  
+      v.levels<- lget(argv,"levels")
+      
+      rrow<- c(lambda=v.lambda,name=name,levels=as.list(v.levels))
+    } else {
+      stop("Invalid parameter combination!")
+    }
+  }
+  
+  # Add or replace the value
+  rownames(rrow)<- NULL
+  if(length(factors) > 0 && any(factors[,"name"] == name)) {
+    i<- which(factors[,"name"] == name)
+    factors[i,]<- c(rrow)
+  } else {
+    factors<- rbind(factors,c(rrow))
+  }
+  
+  factors
+}
+
+#' @title GetFactorLevels
+#'
+#' @description Returns the fator's levels
+#'
+#' @param factors The current factor collection
+#' @param name The factor name
+#'
+#' @examples \dontrun{
+#'    f<- AddFactor0(name="Age",levels=c(25,30,40,65))
+#'    f<- AddFactor0(factors=f, name="Weight",levels=c(60,70,80,90))
+#'    
+#'    GetFactorLevels(factors=f, "Age")}
+#'
+#' @return Levels
+#'
+#' @export
+GetFactorLevels<- function(factors, name) {
+  mylevels<- c()
+  if(length(factors) > 0 && any(factors[,"name"] == name)) {
+    i<- which(factors[,"name"] == name)
+    n<- ncol(factors) 
+    for(j in (which(colnames(factors) == "levels1")):n) {
+      mylevels<- c(mylevels, factors[[i, j]])
+    }
+  }  
+  mylevels
 }
 
 #' @title Get the number of factors

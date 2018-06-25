@@ -257,4 +257,40 @@ hybrid.distance<- function(value, reference, FUN=AoE.NRMSD) {
 }
 
 
+#' @title lcontains
+#'
+#' @description Cheks if a list contains a name
+#'
+#' @param l The list object
+#' @param n The item name
+#'
+#' @return Boolean TRUE if name is found on list
+#'
+#' @export
+lcontains<- function(l, n) {
+  if(is.list(l)) {
+    !is.null(l[[ n ]])
+  } else {
+    warning("The parameter is no a list!")
+    FALSE
+  }
+}
+
+#' @title get
+#'
+#' @description Retrieve the value for a list item
+#'
+#' @param l The list object
+#' @param n The item name
+#'
+#' @return The item value
+#'
+#' @export
+lget<- function(l, n) {
+  if(lcontains(l,n)) {
+    l[[ n ]]
+  } else {
+    NULL
+  }
+}
 
