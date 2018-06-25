@@ -19,7 +19,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Statistics 
 
-[![](http://cranlogs.r-pkg.org/badges/rrepast)](http://cran.rstudio.com/web/packages/rrepast/index.html)
+[![Rdoc](http://www.rdocumentation.org/badges/version/rrepast)](http://www.rdocumentation.org/packages/rrepast)
 
 ## Acknowledgments
 
