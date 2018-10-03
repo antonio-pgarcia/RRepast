@@ -14,7 +14,7 @@ Configures the jvm parameters
 }
 \details{
 Set the underlying parameters for java virtual machine. The default
-values are "-server -Xms512m -Xmx1024m". These defaults can be changed
+values are "-server -Xms1024m -Xmx1024m". These defaults can be changed
 to fit the model requirements.
 }
 \examples{

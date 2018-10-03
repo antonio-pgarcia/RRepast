@@ -404,7 +404,7 @@ repastlibs<- function() {
     bin<- paste0(libdir,paste0(d,"/bin"))
     lib<- paste0(libdir,paste0(d,"/lib"))
     # adding the bin dir to rjava classpath
-    .jaddClassPath(bin)
+    rJava::.jaddClassPath(bin)
     
     repastjars(paste0(libdir,d))
     repastjars(lib)
@@ -418,20 +418,79 @@ repastjars<- function(lib) {
   for(j in jars) {
     jar<- paste0(paste0(lib,"/"),j)
     # adding jar file to classpath
-    .jaddClassPath(jar)
+    rJava::.jaddClassPath(jar)
   }
 }
 
 
 # ----- Exposed package API functions
 
+#' @title jvm.enablejmx
+#'
+#' @description Enable jmx for the current R/rJava session
+#'
+#' @details Configures the JMX subsystem for the current session of R/rJava. 
+#' This function must be called before any other function which initializes 
+#' r/Java such as \code{\link{Easy.Setup}} or \code{\link{Model}} otherwise it will have no effect. 
+#'
+#'
+#' @examples \dontrun{
+#'    jvm.enablejmx()}
+#'
+#' @export
+jvm.enablejmx<- function() {
+  s<- jvm.get_parameters()
+  
+  s<- paste(s,"-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Djava.rmi.server.hostname=0.0.0.0 -Dcom.sun.management.jmxremote.port=9100")
+  s<- jvm.set_parameters(s)
+}
+
+#' @title jvm.getruntime
+#'
+#' @description A wrapper for \code{System.getRuntime()}
+#'
+#' @details A simple wrapper for \code{System.getRuntime()} java method
+#'
+#' @export
+jvm.getruntime<- function() {
+  rJava::.jcall("java/lang/Runtime", "Ljava/lang/Runtime;","getRuntime")  
+}
+
+#' @title jvm.memory
+#'
+#' @description JVM memory state
+#'
+#' @details Provides information about the memory used by the JVM subsystem 
+#'
+#' @export
+jvm.memory<- function() {
+  mb<- 2014^2
+  runtime<- jvm.getruntime() 
+  
+  maxMemory<- rJava::.jcall(runtime, "J", "maxMemory")/mb 
+  freeMemory<- rJava::.jcall(runtime, "J", "freeMemory")/mb
+  totalMemory<- rJava::.jcall(runtime, "J", "totalMemory")/mb
+  
+  cbind(maxMemory, freeMemory, totalMemory)
+}
+
+#' @title jvm.runtimegc
+#'
+#' @description A wrapper for \code{Runntime.gc()}
+#'
+#' @details Forces the execution of the JVM garbage collector  
+#'
+#' @export
+jvm.runtimegc<- function() {
+  rJava::.jcall(jvm.getruntime(), "J", "gc")  
+}
 
 #' @title jvm.set_parameters
 #'
 #' @description Configures the jvm parameters
 #'
 #' @details Set the underlying parameters for java virtual machine. The default
-#' values are "-server -Xms512m -Xmx1024m". These defaults can be changed
+#' values are "-server -Xms1024m -Xmx1024m". These defaults can be changed
 #' to fit the model requirements.
 #'
 #' @param s The paramter string to be passed to the underlying JVM
@@ -472,15 +531,15 @@ jvm.get_parameters<- function() {
 #' very much like .C/.Call and friends. Allows creation of objects,
 #' calling methods and accessing fields.
 #'
-#' @import rJava
+## @import rJava
 jvm.init<- function() {
   # The default parameters can be changed as needed
-  .jinit(force.init = TRUE, parameters= jvm.get_parameters() )
+  rJava::.jinit(force.init = TRUE, parameters= jvm.get_parameters() )
   #options(java.parameters=jvm.get_parameters())
   #.jpackage("rrepast")
   
-  .jaddClassPath(enginejar())
-  .jaddClassPath(paste0(getModelDir(),"/bin"))
+  rJava::.jaddClassPath(enginejar())
+  rJava::.jaddClassPath(paste0(getModelDir(),"/bin"))
   # ----- Repast base libraries
   repastlibs()
 }
@@ -494,7 +553,7 @@ jvm.init<- function() {
 #' @examples \dontrun{
 #'    jvm.setOut("/tmp/SysteOut.log")}
 #'
-#' @import rJava
+## @import rJava
 #'
 #' @export
 jvm.setOut<- function(f) {
@@ -503,9 +562,9 @@ jvm.setOut<- function(f) {
   
   my.f<- paste0(getLogDir(),f)
   ## -- Java calls to redirect the output to a file
-  obj.fos<- new(J("java.io.FileOutputStream"),my.f)
-  obj.ps<- new(J("java.io.PrintStream"),obj.fos)
-  .jcall("java/lang/System","V", "setOut",obj.ps)
+  obj.fos<- rJava::new(rJava::J("java.io.FileOutputStream"),my.f)
+  obj.ps<- rJava::new(rJava::J("java.io.PrintStream"),obj.fos)
+  rJava::.jcall("java/lang/System","V", "setOut",obj.ps)
 }
 
 #' @title jvm.resetOut
@@ -515,14 +574,14 @@ jvm.setOut<- function(f) {
 #' @examples \dontrun{
 #'    jvm.resetOut()}
 #'
-#' @import rJava
+## @import rJava
 #'
 #' @export
 jvm.resetOut<- function() {
-  obj.os<- .jfield("java/io/FileDescriptor", name="out")
-  obj.fos<- new(J("java.io.FileOutputStream"),obj.os)
-  obj.ps<- new(J("java.io.PrintStream"),obj.fos)
-  .jcall("java/lang/System","V", "setOut",obj.ps)
+  obj.os<- rJava::.jfield("java/io/FileDescriptor", name="out")
+  obj.fos<- rJava::new(rJava::J("java.io.FileOutputStream"),obj.os)
+  obj.ps<- rJava::new(rJava::J("java.io.PrintStream"),obj.fos)
+  rJava::.jcall("java/lang/System","V", "setOut",obj.ps)
 }
 
 # ----- Wrapper functions for Engine class method calls
@@ -540,7 +599,7 @@ jvm.resetOut<- function() {
 #'
 #' @export
 Engine<- function() {
-  return(new(J(engineclazz())))
+  return(rJava::new(rJava::J(engineclazz())))
 }
 
 #' @title Engine.LoadModel
@@ -555,7 +614,7 @@ Engine<- function() {
 #'
 #' @export
 Engine.LoadModel<- function(e,f) {
-  .jcall(e,"V", "LoadModel",f)
+  rJava::.jcall(e,"V", "LoadModel",f)
 }
 
 #' @title Engine.SetAggregateDataSet
@@ -575,7 +634,7 @@ Engine.LoadModel<- function(e,f) {
 #'
 #' @export
 Engine.SetAggregateDataSet<- function(e,k) {
-  .jcall(e,"V","ModelDataSet",k)
+  rJava::.jcall(e,"V","ModelDataSet",k)
 }
 
 #' @title Engine.getParameterNames
@@ -591,7 +650,7 @@ Engine.SetAggregateDataSet<- function(e,k) {
 #'
 #' @export
 Engine.getParameterNames<- function(e) {
-  names<- .jcall(e,"[S","getParameterNames")
+  names<- rJava::.jcall(e,"[S","getParameterNames")
   return(names)
 }
 
@@ -607,7 +666,7 @@ Engine.getParameterNames<- function(e) {
 #'
 #' @export
 Engine.getParameter<- function(e,k) {
-  v<- .jcall(e,"Ljava/lang/Object;","getParameter",k)
+  v<- rJava::.jcall(e,"Ljava/lang/Object;","getParameter",k)
   return(v)
 }
 
@@ -623,7 +682,7 @@ Engine.getParameter<- function(e,k) {
 #'
 #' @export
 Engine.getParameterType<- function(e,k) {
-  v<- .jcall(e,"Ljava/lang/String;","getParameterType",k)
+  v<- rJava::.jcall(e,"Ljava/lang/String;","getParameterType",k)
   v
 }
 
@@ -639,7 +698,7 @@ Engine.getParameterType<- function(e,k) {
 #'
 #' @export
 Engine.getParameterAsString<- function(e,k) {
-  v<- .jcall(e,"Ljava/lang/String;","getParameterAsString",k)
+  v<- rJava::.jcall(e,"Ljava/lang/String;","getParameterAsString",k)
   return(v)
 }
 
@@ -655,7 +714,7 @@ Engine.getParameterAsString<- function(e,k) {
 #'
 #' @export
 Engine.getParameterAsNumber<- function(e,k) {
-  v<- .jcall(e,"Ljava/lang/Number;","getParameterAsNumber",k)
+  v<- rJava::.jcall(e,"Ljava/lang/Number;","getParameterAsNumber",k)
   return(v)
 }
 
@@ -670,7 +729,7 @@ Engine.getParameterAsNumber<- function(e,k) {
 #'
 #' @export
 Engine.getParameterAsDouble<- function(e,k) {
-  v<- .jcall(e,"D","getParameterAsDouble",k)
+  v<- rJava::.jcall(e,"D","getParameterAsDouble",k)
   return(v)
 }
 
@@ -687,22 +746,22 @@ Engine.setParameter<- function(e,k,v) {
   # Map the R type system to java object
   switch(Engine.getParameterType(e,k),
          java.lang.String = {
-           value<- new(J("java.lang.String"), as.character(v))
+           value<- rJava::new(rJava::J("java.lang.String"), as.character(v))
          },
          
          double = {
-           value<- new(J("java.lang.Double"), as.double(v))
+           value<- rJava::new(rJava::J("java.lang.Double"), as.double(v))
          },
          
          int = {
-           value<- new(J("java.lang.Integer"), as.integer(v))
+           value<- rJava::new(rJava::J("java.lang.Integer"), as.integer(v))
          },
          
          boolean = {
-           value<- new(J("java.lang.Boolean"), as.logical(v))
+           value<- rJava::new(rJava::J("java.lang.Boolean"), as.logical(v))
          })
   # Invoke the setParamter method
-  .jcall(e,"V","setParameter",k,value)
+  rJava::.jcall(e,"V","setParameter",k,value)
 }
 
 #' @title Engine.endAt
@@ -715,7 +774,7 @@ Engine.setParameter<- function(e,k,v) {
 #'
 #' @export
 Engine.endAt<- function(e,v) {
-  .jcall(e,"V","endAt",v)
+  rJava::.jcall(e,"V","endAt",v)
 }
 
 #' @title Returns the model id
@@ -728,7 +787,7 @@ Engine.endAt<- function(e,v) {
 #'
 #' @export
 Engine.getId<- function(e) {
-  id<- .jcall(e,"S","getId")
+  id<- rJava::.jcall(e,"S","getId")
   if(nchar(id) == 0) stop("Model not initilized.")
   return(id)
 }
@@ -742,7 +801,7 @@ Engine.getId<- function(e) {
 #' @export
 Engine.RunModel<- function(e) {
   enginestats.calls(TRUE)
-  .jcall(e,"V","RunModel")
+  rJava::.jcall(e,"V","RunModel")
 }
 
 #' @title Engine.resetModelOutput
@@ -753,7 +812,7 @@ Engine.RunModel<- function(e) {
 #'
 #' @export
 Engine.resetModelOutput<- function(e) {
-  .jcall(e,"V","resetModelOutput")
+  rJava::.jcall(e,"V","resetModelOutput")
 }
 
 #' @title Engine.GetModelOutput
@@ -773,7 +832,7 @@ Engine.resetModelOutput<- function(e) {
 #' @importFrom utils read.csv
 #' @export
 Engine.GetModelOutput<- function(e) {
-  .jcall(e,"[S","GetModelOutput")
+  rJava::.jcall(e,"[S","GetModelOutput")
 }
 
 #' @title Engine.Finish
@@ -786,7 +845,7 @@ Engine.GetModelOutput<- function(e) {
 #' @export
 Engine.Finish<- function(e) {
   enginestats.reset()
-  .jcall(e,"V","cleanUpBatch")
+  rJava::.jcall(e,"V","cleanUpBatch")
 }
 
 #' @title Set the log level to INFO
@@ -795,8 +854,8 @@ Engine.Finish<- function(e) {
 #'
 #' @export
 Logger.setLevelInfo<- function() {
-  logger<- J("org.haldane.rrepast.RepastEngineLogger")
-  .jcall(logger,"V","setLevelInfo")
+  logger<- rJava::J("org.haldane.rrepast.RepastEngineLogger")
+  rJava::.jcall(logger,"V","setLevelInfo")
 }
 
 #' @title Set the log level to WARNING
@@ -805,8 +864,8 @@ Logger.setLevelInfo<- function() {
 #'
 #' @export
 Logger.setLevelWarning<- function() {
-  logger<- J("org.haldane.rrepast.RepastEngineLogger")
-  .jcall(logger,"V","setLevelWarning")
+  logger<- rJava::J("org.haldane.rrepast.RepastEngineLogger")
+  rJava::.jcall(logger,"V","setLevelWarning")
 }
 
 #' @title ShowModelPaths
@@ -839,5 +898,5 @@ ShowModelPaths<- function() {
 #'
 #' @export
 ShowClassPath<- function() {
-  .jclassPath()
+  rJava::.jclassPath()
 }

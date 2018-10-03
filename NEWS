@@ -9,6 +9,20 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+## R/Repast [0.8.0] - 2018-10-25
+### Added
+- jvm.enablejmx Enable JMX for profiling the java subsystem
+- jvm.getruntime JVM runtime reference
+- jvm.memory JVM memory
+- jvm.runtimegc Force garbage collection
+
+### Changed
+- Eliminated depends imports of xlsx and rJava on DESCRIPTION to avoid initializing the JVM on the package load
+
+### Fixed
+- rJava JVM heapsize settings
+- WrapperRun crash when using parallel 
+
 ## R/Repast [0.7.0] - 2018-06-25
 ### Added
 - Easy.Run Compact call for running a simulation model

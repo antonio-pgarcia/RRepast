@@ -325,6 +325,7 @@ Easy.Setup<- function(model, multicore=FALSE, deployment=c()){
   ## -- Create output dir if required
   createOutputDir()
   
+  jvm.init()
   jvm.setOut("SystemOut.log")
   PB.enable()
   

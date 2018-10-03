@@ -584,7 +584,7 @@ SetResultsParameters<- function(d) {
 #'
 #' @return The id of saved data
 #'
-#' @importFrom xlsx write.xlsx
+## @importFrom xlsx write.xlsx
 #' @importFrom digest digest
 #' @importFrom utils write.csv
 #' @export
@@ -636,11 +636,11 @@ SaveSimulationData<- function(as="csv", experiment=NULL) {
            f1<- paste0(f1,".xlsx")
            f2<- paste0(f2,".xlsx")
 
-           write.xlsx(paramset, f0)
+           xlsx::write.xlsx(paramset, f0)
            if(!is.null(output)) {
-             write.xlsx(output, f1)
+             xlsx::write.xlsx(output, f1)
            }
-           write.xlsx(dataset, f0)
+           xlsx::write.xlsx(dataset, f0)
          })
   return(hash)
 }
