@@ -76,6 +76,9 @@ Easy.Run<- function(m.dir, m.ds, m.time=300, r=1, default=NULL) {
   # --> v<- Run(my.model, r)
   # --> v
   WrapperRun(m.dir, m.ds, m.time, r, c(), NULL, default)
+  
+  ## --- Returns to the previous setting of work directory
+  GoToPreviousDir()
 }
 
 #' @title Easy API for output stability
@@ -329,6 +332,9 @@ Easy.Setup<- function(model, multicore=FALSE, deployment=c()){
   jvm.setOut("SystemOut.log")
   PB.enable()
   
+  ## --- Change work directory
+  GoToWorkDir()
+  
   ## -- Reset stats
   enginestats.reset()
 }
@@ -540,4 +546,27 @@ Results.GetCharts<- function(obj) {
     stop("Not an instance of Easy API result!")
   }
   obj$charts
+}
+
+#' @title GoToWorkDir
+#'
+#' @description Changes the current work directory saving the previous one 
+#' which is used in \code{\link{GoToPreviousDir}}. This function is called 
+#' by \code{\link{Easy.Setup}}
+#'
+#' @export
+GoToWorkDir<- function() {
+  assign("pkg.cwd", getwd(), pkg.globals)
+  setwd(getOutputDir())  
+}
+
+#' @title GoToPreviousDir
+#'
+#' @description Returns to the saved work directory
+#'
+#' @export
+GoToPreviousDir<- function() {
+  if(!is.na(get("pkg.cwd", pkg.globals))) {
+    setwd(get("pkg.cwd", pkg.globals))
+  }
 }

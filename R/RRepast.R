@@ -22,6 +22,7 @@
   assign("pkg.scenariodir", NA, pkg.globals)
   assign("pkg.modellibdir", NA, pkg.globals)
   assign("pkg.id", NA, pkg.globals)
+  assign("pkg.cwd", NA, pkg.globals)
 
   # global simulation results
   assign("pkg.parameters", data.frame(), pkg.globals)
