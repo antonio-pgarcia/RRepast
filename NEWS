@@ -15,6 +15,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - jvm.getruntime JVM runtime reference
 - jvm.memory JVM memory
 - jvm.runtimegc Force garbage collection
+- getpkgdefaultcores The default number of cores used by R/Repast in parallel computations
+- setpkgcores Set the number of cores used by R/Repast
+- getpkgcores Return the number of cores used by R/Repast
 
 ### Changed
 - Eliminated depends imports of xlsx and rJava on DESCRIPTION to avoid initializing the JVM on the package load

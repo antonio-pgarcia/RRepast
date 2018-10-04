@@ -37,6 +37,7 @@
   # parallelize
   assign("pkg.parallelize", FALSE, pkg.globals)
   assign("pkg.runcluster", NULL, pkg.globals)
+  assign("pkg.maxcores", getpkgdefaultcores(), pkg.globals)
 
   # default values for model
   assign("pkg.outputdir",paste0(Sys.getenv("TMP"),"/rrepast-deployment/"), pkg.globals)

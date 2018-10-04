@@ -20,7 +20,7 @@
 #' @export
 ParallelInit<- function() {
   ## --- Prepare the parallel environment for running 
-  v<- makeCluster((detectCores() - 2)) #, outfile="")
+  v<- makeCluster(getpkgcores()) #, outfile="")
   doSNOW::registerDoSNOW(v)  
   #registerDoParallel(v)
   assign("pkg.runcluster", v, pkg.globals)
@@ -37,7 +37,41 @@ ParallelClose<- function() {
   ## --- Clean up cluster
   stopCluster(get("pkg.runcluster", pkg.globals))
 }
-  
+
+#' @title getpkgdefaultcores
+#' 
+#' @description Provides the package default parallelism level which is 80\% of total cores available
+#' 
+#' @return Cores used by R/Repast
+#'  
+#' @export
+getpkgdefaultcores<- function() {
+  v<- trunc(parallel::detectCores()*0.8)
+  ifelse(v < 1, 1, v)
+}
+
+#' @title setpkgcores
+#' 
+#' @description Configures the maximum number of cores to be used in parallel computations
+#' 
+#' @param v The number of cores
+#'  
+#' @export
+setpkgcores<- function(v) {
+  assign("pkg.maxcores", v, pkg.globals)
+}
+
+#' @title getpkgcores
+#' 
+#' @description Returns the maximum number of cores to be used in parallel computations
+#' 
+#' @return The number of cores
+#'  
+#' @export
+getpkgcores<- function() {
+  get("pkg.maxcores", pkg.globals)  
+}
+
 #' @title ParallelRun
 #'
 #' @description Run simulations in parallel. This function 
