@@ -23,6 +23,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 - Eliminated depends imports of xlsx and rJava on DESCRIPTION to avoid initializing the JVM on the package load
+- Citation file including the companion paper
 
 ### Fixed
 - rJava JVM heapsize settings
