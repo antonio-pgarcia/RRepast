@@ -20,6 +20,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - getpkgcores Return the number of cores used by R/Repast
 - GoToWorkDir sets the model's work dir
 - GoTopreviousDir Returns to previous work directory
+- Usage examples (inst/examples)
 
 ### Changed
 - Eliminated depends imports of xlsx and rJava on DESCRIPTION to avoid initializing the JVM on the package load

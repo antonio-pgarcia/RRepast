@@ -75,10 +75,13 @@ Easy.Run<- function(m.dir, m.ds, m.time=300, r=1, default=NULL) {
   
   # --> v<- Run(my.model, r)
   # --> v
-  WrapperRun(m.dir, m.ds, m.time, r, c(), NULL, default)
+  v<- WrapperRun(m.dir, m.ds, m.time, r, c(), NULL, default)
   
   ## --- Returns to the previous setting of work directory
   GoToPreviousDir()
+  
+  ## returns the model dataset
+  v
 }
 
 #' @title Easy API for output stability
