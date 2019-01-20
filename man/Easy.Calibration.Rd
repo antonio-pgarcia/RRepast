@@ -5,7 +5,7 @@
 \title{Easy.Calibration}
 \usage{
 Easy.Calibration(m.dir, m.ds, m.time = 300, parameters, exp.n = 100,
-  exp.r = 1, smax = 4, design = "lhs", FUN)
+  exp.r = 1, smax = 4, design = "lhs", FUN, default = NULL)
 }
 \arguments{
 \item{m.dir}{The installation directory of some repast model}
@@ -24,7 +24,9 @@ Easy.Calibration(m.dir, m.ds, m.time = 300, parameters, exp.n = 100,
 
 \item{design}{The sampling scheme ["lhs"|"mcs"|"ffs"]}
 
-\item{FUN}{The calibration function.}
+\item{FUN}{The objective or cost function. A function defined over the model output.}
+
+\item{default}{The alternative values for parameters which should be kept fixed}
 }
 \value{
 A list with holding experiment, object and charts

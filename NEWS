@@ -9,7 +9,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
-## R/Repast [0.8.0] - 2018-10-25
+## R/Repast [0.8.0] - 2019-01-20
 ### Added
 - jvm.enablejmx Enable JMX for profiling the java subsystem
 - jvm.getruntime JVM runtime reference
@@ -21,14 +21,27 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - GoToWorkDir sets the model's work dir
 - GoTopreviousDir Returns to previous work directory
 - Usage examples (inst/examples)
+- ShowCores prints the number of cores being used for running a Repast model
+- Easy.RunExperiment Easy API for runing experimental designs
 
 ### Changed
-- Eliminated depends imports of xlsx and rJava on DESCRIPTION to avoid initializing the JVM on the package load
+- Eliminated dependencies on imports of xlsx and rJava on DESCRIPTION to avoid initializing the JVM on the package load
 - Citation file including the companion paper
+- Easy.Calibration Eliminated all references to optimization-driven calibration (see EvoPER package)
+- Easy.Calibration Has a new parameter for default values of fixed parameters
+- Easy.Stability Now using parallel wrapper allowing multi-core execution
+- Easy.Morris Now using parallel wrapper allowing multi-core execution
+- Easy.Stability Now using parallel wrapper allowing multi-core execution
+- Easy.Stability Now show how many cores will be used for running the Repast model
 
 ### Fixed
 - rJava JVM heapsize settings
 - WrapperRun crash when using parallel 
+- Easy.Stability Return to the previous work directory
+- Easy.Morris Return to the previous work directory 
+
+### Removed
+- simple.fitting Now is part of Easy.Calibration
 
 ## R/Repast [0.7.0] - 2018-06-25
 ### Added

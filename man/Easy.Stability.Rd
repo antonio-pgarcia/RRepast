@@ -22,12 +22,12 @@ Easy.Stability(m.dir, m.ds, m.time = 300, parameters, samples = 1,
 
 \item{vars}{The model's output variables for compute CoV}
 
-\item{FUN}{The calibration function.}
+\item{FUN}{The objective or cost function. A function defined over the model output.}
 
 \item{default}{The alternative values for parameters which should be kept fixed}
 }
 \value{
-A list with holding experimnt, object and charts
+A list with holding experiment, object and charts
 }
 \description{
 This functions run model several times in order to determine 

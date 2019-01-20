@@ -4,8 +4,8 @@
 \alias{Easy.Morris}
 \title{Easy API for Morris's screening method}
 \usage{
-Easy.Morris(m.dir, m.ds, m.time = 300, parameters, mo.p, mo.r, exp.r, FUN,
-  default = NULL)
+Easy.Morris(m.dir, m.ds, m.time = 300, parameters, mo.p, mo.r, exp.r,
+  FUN, default = NULL)
 }
 \arguments{
 \item{m.dir}{The installation directory of some repast model}
@@ -22,7 +22,7 @@ Easy.Morris(m.dir, m.ds, m.time = 300, parameters, mo.p, mo.r, exp.r, FUN,
 
 \item{exp.r}{The number of experiment replications}
 
-\item{FUN}{The calibration function.}
+\item{FUN}{The objective or cost function. A function defined over the model output.}
 
 \item{default}{The alternative values for parameters which should be kept fixed}
 }

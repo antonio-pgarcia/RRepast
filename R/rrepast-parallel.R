@@ -72,6 +72,17 @@ getpkgcores<- function() {
   get("pkg.maxcores", pkg.globals)  
 }
 
+#' @title ShowUsedCores
+#' 
+#' @description Prints the number of cores used
+#' 
+#' @export
+ShowCores<- function() {
+  cores<- ifelse(!parallelize(), 1, getpkgcores() )  
+  v<- paste0("***** Using ", cores, " of ",  parallel::detectCores(), " available cores *****")
+  print(v)
+}
+
 #' @title ParallelRun
 #'
 #' @description Run simulations in parallel. This function 

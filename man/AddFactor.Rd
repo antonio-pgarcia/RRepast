@@ -4,7 +4,8 @@
 \alias{AddFactor}
 \title{Adds a paramter to factor collection}
 \usage{
-AddFactor(factors = c(), lambda = "qunif", name, min, max, int = FALSE)
+AddFactor(factors = c(), lambda = "qunif", name, min, max,
+  int = FALSE)
 }
 \arguments{
 \item{factors}{The current factor collection}

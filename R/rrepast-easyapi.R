@@ -84,6 +84,32 @@ Easy.Run<- function(m.dir, m.ds, m.time=300, r=1, default=NULL) {
   v
 }
 
+#' @title Easy API for Runnning Experiments
+#' 
+#' @description This function provides a simple wrapper for performing experimental
+#' setups using a design matrix
+#' 
+#' @param m.dir The installation directory of some repast model
+#' @param m.ds The name of any model aggregate dataset
+#' @param m.time The total simulated time
+#' @param r The number of replications
+#' @param design The design matrix holding parameter sampling
+#' @param FUN The objective or cost function. A function defined over the model output.
+#' @param default The alternative values for parameters which should be kept fixed
+#' 
+#' @return The experiment results
+#' 
+#' @export
+Easy.RunExperiment<- function(m.dir, m.ds, m.time=300, r=1, design, FUN, default=NULL) {
+  exp<- WrapperRunExperiment(m.dir, m.ds, m.time, r, design, FUN, default)
+  
+  ## --- Returns to the previous setting of work directory
+  GoToPreviousDir()
+  
+  return(exp)
+}
+
+
 #' @title Easy API for output stability
 #' 
 #' @description This functions run model several times in order to determine 
@@ -97,32 +123,34 @@ Easy.Run<- function(m.dir, m.ds, m.time=300, r=1, default=NULL) {
 #' @param samples The number of factor samples.
 #' @param tries The number of experiment replications
 #' @param vars The model's output variables for compute CoV
-#' @param FUN The calibration function.
+#' @param FUN The objective or cost function. A function defined over the model output.
 #' @param default The alternative values for parameters which should be kept fixed
 #' 
-#' @return A list with holding experimnt, object and charts 
+#' @return A list with holding experiment, object and charts 
 #' 
 #' @export
 Easy.Stability<- function(m.dir, m.ds, m.time=300, parameters, samples=1, tries=100, vars= c(), FUN, default=NULL) {
-  my.model<- Model(modeldir=m.dir,maxtime = m.time, dataset=m.ds)
-  Load(my.model)
+  # (2019/01/19) -----> my.model<- Model(modeldir=m.dir,maxtime = m.time, dataset=m.ds)
+  # (2019/01/19) -----> Load(my.model)
   
   ## --- Update if needed the default parameters
-  if(!is.null(default)) {
-    UpdateDefaultParameters(my.model, default)  
-  }
+  # (2019/01/19) -----> if(!is.null(default)) {
+  # (2019/01/19) ----->   UpdateDefaultParameters(my.model, default)  
+  # (2019/01/19) -----> }
   
   ## --- Sample the parameter space
   sampling<- AoE.RandomSampling(samples, parameters)
   
   ## --- Get the model declared paramters
-  parms<- GetSimulationParameters(my.model)
+  # (2019/01/19) -----> parms<- GetSimulationParameters(my.model)
   
   ## --- Build the experimental parameter set
-  exp.design<- BuildParameterSet(sampling, parms)
+  # (2019/01/19) -----> exp.design<- BuildParameterSet(sampling, parms)
   
   ## --- Run the experimental setup
-  exp<- RunExperiment(my.model,r=tries,exp.design,FUN)
+  # (2019/01/19) -----> exp<- RunExperiment(my.model,r=tries,exp.design,FUN)
+  
+  exp<- WrapperRunExperiment(m.dir, m.ds, m.time, tries, sampling, FUN, default)
   
   ## --- Get the raw data set for evaluate the Coefficient of Variation
   d<- getExperimentDataset(exp)
@@ -140,6 +168,9 @@ Easy.Stability<- function(m.dir, m.ds, m.time=300, parameters, samples=1, tries=
     chart<- Plot.Stability(rsd,"Simulation output stability")
     charts<- rbind(charts, list(group="all",plot=chart))
   }
+
+  ## --- Returns to the previous setting of work directory
+  GoToPreviousDir()
   
   results<- list(experiment=exp, object=rsd, charts=charts)
   return(results)
@@ -157,7 +188,7 @@ Easy.Stability<- function(m.dir, m.ds, m.time=300, parameters, samples=1, tries=
 #' @param mo.p The number of levels for the model's factors.
 #' @param mo.r Repetitions. The number of random sampling points of Morris Method.
 #' @param exp.r The number of experiment replications
-#' @param FUN The calibration function.
+#' @param FUN The objective or cost function. A function defined over the model output.
 #' @param default The alternative values for parameters which should be kept fixed
 #' 
 #' @return A list with holding experimnt, object and charts 
@@ -166,26 +197,28 @@ Easy.Stability<- function(m.dir, m.ds, m.time=300, parameters, samples=1, tries=
 #' 
 #' @export
 Easy.Morris<- function(m.dir, m.ds, m.time=300, parameters, mo.p, mo.r, exp.r, FUN, default=NULL) {
-  my.model<- Model(modeldir=m.dir,maxtime = m.time, dataset=m.ds)
-  Load(my.model)
+  # (2019/01/19) -----> my.model<- Model(modeldir=m.dir,maxtime = m.time, dataset=m.ds)
+  # (2019/01/19) -----> Load(my.model)
   
   ## --- Update if needed the default parameters
-  if(!is.null(default)) {
-    UpdateDefaultParameters(my.model, default)  
-  }
+  # (2019/01/19) -----> if(!is.null(default)) {
+  # (2019/01/19) ----->   UpdateDefaultParameters(my.model, default)  
+  # (2019/01/19) -----> }
 
   ## --- Create Morris object
   v.morris<- AoE.Morris(parameters,p=mo.p,r=mo.r)
   
   
   ## --- Get the model declared paramters
-  parms<- GetSimulationParameters(my.model)
+  # (2019/01/19) -----> parms<- GetSimulationParameters(my.model)
   
   ## --- Build the experimental parameter set
-  exp.design<- BuildParameterSet(v.morris$X,parms)
+  # (2019/01/19) -----> exp.design<- BuildParameterSet(v.morris$X,parms)
   
   ## --- Run the experimental setup
-  exp<- RunExperiment(my.model,r=exp.r,exp.design,FUN)
+  # (2019/01/19) -----> exp<- RunExperiment(my.model,r=exp.r,exp.design,FUN)
+  
+  exp<- WrapperRunExperiment(m.dir, m.ds, m.time, exp.r, v.morris$X, FUN, default)
   
   charts<- c()
   o<- getExperimentOutput(exp)
@@ -203,6 +236,9 @@ Easy.Morris<- function(m.dir, m.ds, m.time=300, parameters, mo.p, mo.r, exp.r, F
     ### ---> results<- list(experiment=exp, object=v.morris, charts=charts)
   }
   
+  ## --- Returns to the previous setting of work directory
+  GoToPreviousDir()
+  
   results<- list(experiment=exp, object=v.morris, charts=charts)
   return(results)
 }
@@ -219,7 +255,7 @@ Easy.Morris<- function(m.dir, m.ds, m.time=300, parameters, mo.p, mo.r, exp.r, F
 #' @param exp.n The experiment sample size
 #' @param exp.r The number of experiment replications
 #' @param bs.size The bootstrap sample size for sobol method
-#' @param FUN The objective function.
+#' @param FUN The objective or cost function. A function defined over the model output.
 #' @param default The alternative values for parameters which should be kept fixed
 #' @param fsobol The alternative function for calculating sobol indices
 #' @param fsampl The function for sampling data
@@ -287,6 +323,10 @@ Easy.Sobol<- function(m.dir, m.ds, m.time=300, parameters,exp.n = 500, bs.size =
     } 
     ### ---> results<- list(experiment=exp, object=my.obj, charts=charts)
   }
+  
+  ## --- Returns to the previous setting of work directory
+  GoToPreviousDir()
+  
   results<- list(experiment=exp, object=my.obj, charts=charts)
   return(results)
 }
@@ -340,6 +380,9 @@ Easy.Setup<- function(model, multicore=FALSE, deployment=c()){
   
   ## -- Reset stats
   enginestats.reset()
+  
+  ## -- Show cores in use
+  ShowCores()
 }
 
 #' @title Easy.Calibration
@@ -359,7 +402,8 @@ Easy.Setup<- function(model, multicore=FALSE, deployment=c()){
 #' @param exp.r The number of experiment replications
 #' @param smax The number of solutions to be generated
 #' @param design The sampling scheme ["lhs"|"mcs"|"ffs"]
-#' @param FUN The calibration function.
+#' @param FUN The objective or cost function. A function defined over the model output.
+#' @param default The alternative values for parameters which should be kept fixed
 #'
 #' @return A list with holding experiment, object and charts 
 #' 
@@ -381,112 +425,63 @@ Easy.Setup<- function(model, multicore=FALSE, deployment=c()){
 #' }
 #' 
 #' @export
-Easy.Calibration<- function(m.dir, m.ds, m.time=300, parameters, exp.n = 100, exp.r=1, smax=4, design="lhs", FUN) {
+Easy.Calibration<- function(m.dir, m.ds, m.time=300, parameters, exp.n = 100, exp.r=1, smax=4, design="lhs", FUN, default=NULL) {
   ## --- Sample the parameter space
+  switch(design,
+           lhs = {
+             sampling<- AoE.LatinHypercube(exp.n, parameters)  
+           },
+           
+           mcs = {
+             sampling<- AoE.RandomSampling(exp.n, parameters)
+           },
+           
+           ffs = {
+             sampling<- AoE.FullFactorial(exp.n, parameters)
+           },
+           
+           stop("Valid sampling types are [mcs|lhs|ffs]")
+    )
+
+    exp<- WrapperRunExperiment(m.dir, m.ds, m.time, exp.r, sampling, FUN, default)
+    
+    ## --- Add a totalization column
+    exp$output<- col.sum(exp$output)
+    
+    tbl.theme<- gridExtra::ttheme_default(colhead=list(fg_params = list(parse=TRUE)))
+    
+    charts<- c()
+    obj<- c()
+    fittest.max<- smax 
+    
+    o<- getExperimentOutput(exp)
+    for(k in colnames(o)) {
+      if(k != "pset") {
+        p<- getExperimentParamSet(exp)
+        best<- dffilterby(o,"pset",pick.fittest(o,goals=c(k),fittest.max)$pset)
+        chart<- Plot.Calibration(best,k,paste0("Best parameters for ", k))
+        
+        best.p<- dffilterby(p,"pset",pick.fittest(o,goals=c(k),fittest.max)$pset)
+        tbl.data<- best.p[,c("pset",parameters[,"name"])]
+        tbl.data<- dfround(tbl.data,2)
+        tbl.table<- gridExtra::tableGrob(tbl.data, rows=NULL, theme= tbl.theme)
+        my.chart<- gridExtra::arrangeGrob(chart, tbl.table, nrow=2, as.table=TRUE, heights=c(3,1))
+        
+        charts<- rbind(charts,list(variable=k,both=my.chart,chart=chart,table=tbl.table))
+        obj<- rbind(obj,list(variable=k,parameters=best.p,objective=best))
+      }
+    }
+    
+   
+  ## --- Build the list with calibration results   
+  v<- list(experiment=exp, object=obj, charts=charts)
   
-  method<- "simple"
-  switch(method,
-         simple = {
-           v<- simple.fitting(m.dir, m.ds, m.time, parameters, exp.n, exp.r, design , smax, FUN)      
-         }, 
-         stop("Valid calibration methods are [simple|pso]")
-  )
+  ## --- Returns to the previous setting of work directory
+  GoToPreviousDir()
   
   return(v)
 }
 
-
-##
-## ----- Below calibration support methods
-##
-
-
-#' @title simple.fitting
-#' 
-#' @description Simple calibration method. Run an experimental setup and select the 
-#' the best results minimizing the calibration function
-#' 
-#' @param m.dir The installation directory of some repast model
-#' @param m.ds The name of any model aggregate dataset
-#' @param m.time The total simulated time
-#' @param parameters The input factors
-#' @param samples The experiment sample size
-#' @param tries The number of experiment replications
-#' @param design The sampling scheme ["lhs"|"mcs"|"ffs"]
-#' @param smax The number of solutions to be generated
-#' @param objective The calibration function.
-#'
-#' @importFrom gridExtra ttheme_default tableGrob arrangeGrob
-#' @export
-simple.fitting<- function(m.dir, m.ds, m.time=300, parameters, samples=100, tries=1, design="lhs" , smax=4, objective) {
-  ## --- Instantiate the model
-  my.model<- Model(modeldir=m.dir,maxtime = m.time, dataset=m.ds,load = TRUE)
-  
-  
-  ## --- Sample the parameter space
-  switch(design,
-         lhs = {
-           sampling<- AoE.LatinHypercube(samples, parameters)  
-         },
-         
-         mcs = {
-           sampling<- AoE.RandomSampling(samples, parameters)
-         },
-         
-         ffs = {
-           sampling<- AoE.FullFactorial(samples, parameters)
-         },
-         
-         stop("Valid sampling types are [mcs|lhs|ffs]")
-         
-  )
-  
-  
-  ## --- Get the model declared paramters
-  parms<- GetSimulationParameters(my.model)
-  
-  ## --- Build the experimental parameter set
-  exp.design<- BuildParameterSet(sampling, parms)
-  
-  ## --- Run the experimental setup
-  exp<- RunExperiment(my.model,r=tries,exp.design,objective)
-  
-  ## --- Add a totalization column
-  exp$output<- col.sum(exp$output)
-  
-  tbl.theme<- ttheme_default(colhead=list(fg_params = list(parse=TRUE)))
-  
-  ##tmp<- c()
-  charts<- c()
-  obj<- c()
-  fittest.max<- smax 
-  
-  o<- getExperimentOutput(exp)
-  for(k in colnames(o)) {
-    if(k != "pset") {
-      p<- getExperimentParamSet(exp)
-      best<- dffilterby(o,"pset",pick.fittest(o,goals=c(k),fittest.max)$pset)
-      chart<- Plot.Calibration(best,k,paste0("Best parameters for ", k))
-      
-      best.p<- dffilterby(p,"pset",pick.fittest(o,goals=c(k),fittest.max)$pset)
-      tbl.data<- best.p[,c("pset",parameters[,"name"])]
-      tbl.data<- dfround(tbl.data,2)
-      tbl.table<- tableGrob(tbl.data, rows=NULL, theme= tbl.theme)
-      my.chart<- arrangeGrob(chart, tbl.table, nrow=2, as.table=TRUE, heights=c(3,1))
-      
-      charts<- rbind(charts,list(variable=k,both=my.chart,chart=chart,table=tbl.table))
-      obj<- rbind(obj,list(variable=k,parameters=best.p,objective=best))
-    }
-  }
-  
-  ###obj$data<- tmp
-  ###obj$keys<- unlist(obj$data[,"variable"])
-  ###obj$parameters<- function(k) {obj$data[(obj$data[,"variable"] == k),"parameters"][[1]]}
-  ###obj$objective<- function(k) {obj$data[(obj$data[,"variable"] == k),"objective"][[1]]}
-  
-  results<- list(experiment=exp, object=obj, charts=charts)
-  return(results)
-}
 
 #' @title Easy.ShowModelParameters
 #' 

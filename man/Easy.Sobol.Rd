@@ -5,8 +5,8 @@
 \title{Easy API for Sobol's SA method}
 \usage{
 Easy.Sobol(m.dir, m.ds, m.time = 300, parameters, exp.n = 500,
-  bs.size = 200, exp.r = 1, FUN, default = NULL, fsobol = sobol2002,
-  fsampl = AoE.LatinHypercube)
+  bs.size = 200, exp.r = 1, FUN, default = NULL,
+  fsobol = sobol2002, fsampl = AoE.LatinHypercube)
 }
 \arguments{
 \item{m.dir}{The installation directory of some repast model}
@@ -23,7 +23,7 @@ Easy.Sobol(m.dir, m.ds, m.time = 300, parameters, exp.n = 500,
 
 \item{exp.r}{The number of experiment replications}
 
-\item{FUN}{The objective function.}
+\item{FUN}{The objective or cost function. A function defined over the model output.}
 
 \item{default}{The alternative values for parameters which should be kept fixed}
 
