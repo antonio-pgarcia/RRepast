@@ -9,7 +9,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
-## R/Repast [0.8.0] - 2019-01-20
+## R/Repast [0.8.0] - 2020-02-18
 ### Added
 - jvm.enablejmx Enable JMX for profiling the java subsystem
 - jvm.getruntime JVM runtime reference
@@ -20,7 +20,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - getpkgcores Return the number of cores used by R/Repast
 - GoToWorkDir sets the model's work dir
 - GoTopreviousDir Returns to previous work directory
-- Usage examples (inst/examples)
+- Simple usage examples (inst/examples) for single and multi-core execution.
 - ShowCores prints the number of cores being used for running a Repast model
 - Easy.RunExperiment Easy API for runing experimental designs
 
